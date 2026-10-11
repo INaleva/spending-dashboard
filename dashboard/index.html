@@ -1,0 +1,1539 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>התזרים שלי</title>
+<link rel="icon" href="data:,">
+<style>
+/* Rubik is stored locally in fonts/ (from @fontsource/rubik, SIL OFL 1.1): the page loads nothing from the internet */
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/rubik-hebrew-400-normal.woff2) format("woff2"); unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/rubik-hebrew-500-normal.woff2) format("woff2"); unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/rubik-hebrew-600-normal.woff2) format("woff2"); unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/rubik-hebrew-700-normal.woff2) format("woff2"); unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/rubik-latin-400-normal.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/rubik-latin-500-normal.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/rubik-latin-600-normal.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/rubik-latin-700-normal.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+:root {
+  color-scheme: light;
+  --page: #f3f3f6;
+  --surface: #ffffff;
+  --text-primary: #1d1d24;
+  --text-secondary: #5c5c66;
+  --text-muted: #8d8d97;
+  --hairline: #ececf1;
+  --shadow: 0 2px 12px rgba(20, 20, 40, 0.07);
+  --wash: rgba(20, 20, 40, 0.04);
+  /* buckets: each card keeps one identity color */
+  --income: #12a454;
+  --fixed: #d43fb5;
+  --variable: #e0a100;
+  --tracked: #4f6ff0;
+  --negative: #d93a3a;
+  --income-text: #0a7a3c;
+  --fixed-text: #b02a95;
+  --variable-text: #9a6c00;
+  --tracked-text: #3552d1;
+  --negative-text: #c42b2b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #111114;
+    --surface: #1c1c21;
+    --text-primary: #f4f4f6;
+    --text-secondary: #c2c2cc;
+    --text-muted: #8d8d97;
+    --hairline: #2b2b33;
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    --wash: rgba(255, 255, 255, 0.05);
+    --income: #22c06a;
+    --fixed: #e45cc9;
+    --variable: #e8ad12;
+    --tracked: #6d88ff;
+    --negative: #f06060;
+    --income-text: #4fd88d;
+    --fixed-text: #ef86da;
+    --variable-text: #f2c34a;
+    --tracked-text: #93a7ff;
+    --negative-text: #ff8080;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #111114;
+  --surface: #1c1c21;
+  --text-primary: #f4f4f6;
+  --text-secondary: #c2c2cc;
+  --text-muted: #8d8d97;
+  --hairline: #2b2b33;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --wash: rgba(255, 255, 255, 0.05);
+  --income: #22c06a;
+  --fixed: #e45cc9;
+  --variable: #e8ad12;
+  --tracked: #6d88ff;
+  --negative: #f06060;
+  --income-text: #4fd88d;
+  --fixed-text: #ef86da;
+  --variable-text: #f2c34a;
+  --tracked-text: #93a7ff;
+  --negative-text: #ff8080;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text-primary);
+  font: 15px/1.5 "Rubik", system-ui, "Segoe UI", Arial, sans-serif;
+}
+button { font: inherit; color: inherit; }
+
+/* top bar + month navigator */
+.topbar { position: sticky; top: 0; z-index: 5; background: var(--surface); box-shadow: 0 1px 0 var(--hairline); }
+.topbar-inner { max-width: 1100px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { font-weight: 700; font-size: 20px; color: var(--variable); letter-spacing: -0.01em; }
+.brand small { font-weight: 500; font-size: 12px; color: var(--negative-text); margin-inline-start: 8px; }
+.icon-btn { background: none; border: none; padding: 6px 10px; border-radius: 8px; cursor: pointer; color: var(--text-secondary); font-size: 13px; }
+.icon-btn:hover { background: var(--wash); }
+.top-actions { display: flex; align-items: center; gap: 8px; min-width: 0; }
+#sync-status { max-width: 46vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; unicode-bidi: plaintext; }
+#sync-status.err { color: var(--negative-text); }
+.sync-btn { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 999px; padding: 7px 14px; cursor: pointer;
+  background: var(--tracked); color: #fff; font-weight: 500; font-size: 14px; }
+.sync-btn:hover:not(:disabled) { filter: brightness(1.08); }
+.sync-btn:disabled { opacity: 0.7; cursor: progress; }
+.sync-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.sync-btn.busy svg { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .sync-btn.busy svg { animation: none; } }
+.monthnav { max-width: 1100px; margin: 0 auto; padding: 4px 16px 10px; display: flex; align-items: center; justify-content: space-between; }
+.monthnav .label { font-weight: 600; font-size: 17px; }
+.monthnav .label .sub { font-weight: 400; color: var(--text-muted); font-size: 13px; margin-inline-start: 6px; }
+.nav-btn { background: none; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: grid; place-items: center; }
+.nav-btn:hover:not(:disabled) { background: var(--wash); }
+.nav-btn:disabled { opacity: 0.25; cursor: default; }
+.nav-btn svg { width: 22px; height: 22px; stroke: var(--text-primary); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+/* layout: one column on phones, two on wide screens */
+main { max-width: 1100px; margin: 0 auto; padding: 16px 16px 48px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; align-items: start; }
+.col { display: grid; gap: 14px; min-width: 0; }
+@media (min-width: 900px) {
+  main { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+  .col { gap: 18px; }
+}
+
+.card { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+.card-body { padding: 18px 20px; }
+.card h2 { font-size: 20px; font-weight: 600; margin: 0 0 14px; }
+.card h3 { font-size: 15px; font-weight: 500; margin: 0 0 4px; color: var(--text-secondary); }
+.section-title { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin: 8px 4px -4px; }
+.hint { color: var(--text-muted); font-size: 13px; }
+
+/* amounts: Hebrew order, number then ₪ (the shekel sign sits to the left) */
+.amt { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.amt .cur { font-size: 0.72em; margin-inline-start: 0.2em; font-weight: 500; }
+
+/* hero */
+.hero .lead { font-size: 21px; font-weight: 500; line-height: 1.35; margin: 0; }
+.hero .big { font-size: 46px; font-weight: 600; text-align: left; margin: 6px 0 2px; line-height: 1.1; }
+.pos { color: var(--income-text); }
+.neg { color: var(--negative-text); }
+.hero .foot { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; border-top: 1px solid var(--hairline); padding: 12px 20px; font-size: 14px; color: var(--text-secondary); }
+.hero .foot .v { text-align: left; }
+.hero .so-far { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+/* bucket cards */
+.figs { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 8px; }
+.fig .k { font-size: 12px; color: var(--text-muted); }
+.fig .v { font-size: 22px; font-weight: 600; }
+.fig.end { text-align: left; }
+.fig.end .v { font-size: 18px; font-weight: 500; color: var(--text-secondary); }
+.bar { height: 12px; border-radius: 999px; overflow: hidden; display: flex; }
+.bar > span { display: block; height: 100%; border-radius: 999px; }
+.leftover { font-size: 13px; color: var(--text-secondary); margin-top: 8px; }
+.leftover.over { color: var(--negative-text); font-weight: 500; }
+
+/* expandable rows */
+details { border-top: 1px solid var(--hairline); }
+details > summary { list-style: none; cursor: pointer; padding: 13px 20px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; }
+details > summary::-webkit-details-marker { display: none; }
+details > summary:hover { background: var(--wash); }
+details > summary .grow { flex: 1; }
+details > summary .chev { flex: none; width: 16px; height: 16px; stroke: var(--text-primary); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .15s; }
+details[open] > summary .chev { transform: rotate(180deg); }
+details .inner { padding: 0 20px 12px; }
+details details { border-top: none; }
+details details > summary { padding: 8px 0; font-weight: 400; }
+details details .inner { padding: 0 12px 8px 0; }
+
+.rows { list-style: none; margin: 0; padding: 0; }
+.rows li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; padding: 8px 0; border-bottom: 1px solid var(--hairline); font-size: 14px; }
+.rows li:last-child { border-bottom: none; }
+.rows .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; unicode-bidi: plaintext; text-align: right; }
+.rows .meta { grid-column: 1 / -1; font-size: 12px; color: var(--text-muted); }
+.rows .val { text-align: left; }
+.rows li.pending .name, .rows li.pending .val { color: var(--text-muted); }
+.edit-btn { background: none; border: none; padding: 0 4px; margin-inline-start: 6px; cursor: pointer; color: var(--tracked-text); font-size: 12px; text-decoration: underline; }
+.tag.manual { background: color-mix(in srgb, var(--tracked) 18%, var(--surface)); color: var(--tracked-text); }
+dialog.edit { border: none; border-radius: 16px; padding: 0; width: min(440px, calc(100vw - 32px)); background: var(--surface); color: var(--text-primary); box-shadow: 0 10px 40px rgba(0,0,0,.25); }
+dialog.edit::backdrop { background: rgba(10, 10, 20, 0.45); }
+dialog.edit form { padding: 20px; display: grid; gap: 14px; }
+dialog.edit h3 { margin: 0; font-size: 18px; font-weight: 600; color: var(--text-primary); unicode-bidi: plaintext; text-align: right; }
+dialog.edit .sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+dialog.edit label.f { display: grid; gap: 4px; font-size: 13px; color: var(--text-secondary); }
+dialog.edit input[type="text"], dialog.edit select { font: inherit; color: var(--text-primary); background: var(--page); border: 1px solid var(--hairline); border-radius: 10px; padding: 8px 10px; }
+dialog.edit .row { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+dialog.edit fieldset { border: 1px solid var(--hairline); border-radius: 10px; padding: 8px 12px; margin: 0; display: grid; gap: 6px; }
+dialog.edit legend { font-size: 13px; color: var(--text-secondary); padding: 0 4px; }
+dialog.edit .actions { display: flex; gap: 8px; justify-content: flex-start; flex-wrap: wrap; }
+dialog.edit .actions button { font: inherit; border-radius: 999px; padding: 8px 16px; cursor: pointer; border: 1px solid var(--hairline); background: var(--surface); }
+dialog.edit .actions .primary { background: var(--tracked); color: #fff; border-color: transparent; font-weight: 500; }
+dialog.edit .actions .reset { margin-inline-start: auto; color: var(--negative-text); }
+dialog.edit .err { color: var(--negative-text); font-size: 13px; min-height: 1em; }
+.tag { display: inline-block; font-size: 11px; color: var(--text-secondary); background: var(--wash); border-radius: 6px; padding: 0 6px; margin-inline-start: 6px; vertical-align: 1px; }
+.check { color: var(--income-text); font-weight: 700; margin-inline-start: 4px; }
+
+/* comparison chart */
+.chart svg { display: block; width: 100%; overflow: visible; }
+.chart text { font-family: inherit; }
+.chart .m-bar { cursor: pointer; outline: none; }
+.chart .m-bar:focus-visible .hit { stroke: var(--text-muted); stroke-width: 1; stroke-dasharray: 3 3; }
+
+/* alerts */
+.planned-form { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; align-items: center; }
+.planned-form input, .planned-form select { font: inherit; font-size: 13px; color: var(--text-primary); background: var(--page); border: 1px solid var(--hairline); border-radius: 8px; padding: 6px 8px; }
+.planned-form input[type="text"]:not([inputmode]) { flex: 1; min-width: 140px; }
+/* balance forecast tooltip */
+.fc-tip { position: absolute; z-index: 3; pointer-events: none; min-width: 180px; max-width: 280px;
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px; padding: 8px 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); font-size: 12px; }
+.fc-tip-date { color: var(--text-secondary); }
+.fc-tip-bal { font-size: 18px; font-weight: 600; }
+.fc-tip-k { color: var(--text-muted); font-size: 11px; margin-bottom: 4px; }
+.fc-tip-row { display: flex; justify-content: space-between; gap: 10px; border-top: 1px solid var(--hairline); padding-top: 3px; margin-top: 3px; }
+.fc-tip-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; unicode-bidi: plaintext; text-align: right; }
+.alerts { list-style: none; margin: 0; padding: 0; }
+.alerts li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 2px 8px; padding: 10px 0; border-bottom: 1px solid var(--hairline); }
+.alerts li:last-child { border-bottom: none; }
+.alerts .ico { font-weight: 700; color: var(--negative-text); text-align: center; }
+.alerts .kind { font-size: 12px; color: var(--text-muted); }
+.alerts .title { font-weight: 500; unicode-bidi: plaintext; text-align: right; }
+.alerts .detail { grid-column: 2; font-size: 13px; color: var(--text-secondary); unicode-bidi: plaintext; text-align: right; }
+
+/* non-cashflow */
+.gap-row { display: flex; justify-content: space-between; align-items: center; background: var(--wash); border-radius: 10px; padding: 10px 14px; font-weight: 500; }
+
+/* search */
+.search { width: 100%; font: inherit; color: var(--text-primary); background: var(--page); border: 1px solid var(--hairline); border-radius: 10px; padding: 8px 12px; margin-bottom: 8px; }
+
+.empty { color: var(--text-secondary); padding: 60px 16px; text-align: center; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">התזרים שלי<small id="demo-flag" hidden>נתוני דוגמה</small></div>
+    <div class="top-actions">
+      <span class="hint" id="updated"></span>
+      <span class="hint neg" id="sync-warn" hidden></span>
+      <span class="hint" id="sync-status" aria-live="polite"></span>
+      <button class="sync-btn" id="sync" type="button" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9"/><path d="M18.5 3v4.2h-4.2M5.5 21v-4.2h4.2"/></svg>
+        <span>סנכרון</span>
+      </button>
+      <button class="icon-btn" id="demo" type="button" hidden></button>
+      <button class="icon-btn" id="theme" type="button" title="מעבר בין מצב בהיר לכהה">מצב תצוגה</button>
+    </div>
+  </div>
+  <nav class="monthnav" aria-label="ניווט בין חודשים">
+    <button class="nav-btn" id="prev" type="button" aria-label="החודש הקודם"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+    <div class="label" id="month-label" aria-live="polite"></div>
+    <button class="nav-btn" id="next" type="button" aria-label="החודש הבא"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+  </nav>
+</header>
+<main>
+  <div class="col" id="col-a"></div>
+  <div class="col" id="col-b"></div>
+</main>
+<dialog class="edit" id="budget-dialog" aria-labelledby="budget-title">
+  <form method="dialog" id="budget-form">
+    <div>
+      <h3 id="budget-title"></h3>
+      <div class="sub" id="budget-sub"></div>
+    </div>
+    <label class="f">צפוי לצאת בחודש (₪)
+      <input type="text" id="budget-amount" inputmode="numeric" autocomplete="off" maxlength="9" dir="ltr" style="text-align:right">
+    </label>
+    <div class="hint">הסכום יחול על החודש הזה ועל כל החודשים הבאים, עד שתשנו אותו. חודשים קודמים לא ישתנו.</div>
+    <div class="err" id="budget-err" role="alert"></div>
+    <div class="actions">
+      <button type="submit" class="primary" id="budget-save">שמירה</button>
+      <button type="button" id="budget-cancel">ביטול</button>
+      <button type="button" class="reset" id="budget-reset">חזרה לממוצע 3 חודשים</button>
+    </div>
+  </form>
+</dialog>
+<dialog class="edit" id="edit-dialog" aria-labelledby="edit-title">
+  <form method="dialog" id="edit-form">
+    <div>
+      <h3 id="edit-title"></h3>
+      <div class="sub" id="edit-sub"></div>
+    </div>
+    <label class="f">קטגוריה
+      <input type="text" id="edit-cat" list="edit-cats" autocomplete="off" maxlength="60">
+    </label>
+    <datalist id="edit-cats"></datalist>
+    <label class="f">קבועה או משתנה
+      <select id="edit-flow">
+        <option value="">אוטומטי</option>
+        <option value="fixed">קבועה</option>
+        <option value="variable">משתנה</option>
+      </select>
+    </label>
+    <label class="row"><input type="checkbox" id="edit-exclude"> לא בתזרים (לא נספר כהכנסה או כהוצאה)</label>
+    <label class="row"><input type="checkbox" id="edit-oneoff"> חד־פעמי: נספר בחודש שלו, אבל לא נכנס לממוצע של החודשים הבאים</label>
+    <fieldset>
+      <legend>על מה להחיל</legend>
+      <label class="row"><input type="radio" name="scope" value="txn" checked> רק התנועה הזו</label>
+      <label class="row"><input type="radio" name="scope" value="merchant"> <span id="edit-merchant-label"></span></label>
+    </fieldset>
+    <div class="err" id="edit-err" role="alert"></div>
+    <div class="actions">
+      <button type="submit" class="primary" id="edit-save" value="save">שמירה</button>
+      <button type="button" id="edit-cancel">ביטול</button>
+      <button type="button" class="reset" id="edit-reset">החזרה לאוטומטי</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="data.js"></script>
+<script>
+(() => {
+'use strict';
+const D = window.SPENDING;
+const $ = s => document.querySelector(s);
+const SVGNS = 'http://www.w3.org/2000/svg';
+
+function svg(tag, attrs, parent) {
+  const n = document.createElementNS(SVGNS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+// Every label is bank-provided text, so it only ever goes in via textContent.
+function h(tag, props, ...kids) {
+  const n = document.createElement(tag);
+  for (const k in props || {}) {
+    const v = props[k];
+    if (v == null || v === false) continue;
+    if (k === 'class') n.className = v;
+    else if (k === 'text') n.textContent = v;
+    else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v === true ? '' : v);
+  }
+  for (const c of kids.flat()) if (c != null && c !== false) n.append(c instanceof Node ? c : document.createTextNode(String(c)));
+  return n;
+}
+
+try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+$('#theme').addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme
+    || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('theme', next); } catch (e) {}
+});
+
+// ---------- sync (only when served by `npm run dashboard`) ----------
+(function setupSync() {
+  const token = window.SYNC_TOKEN;
+  if (!token) return; // opened as a plain file: no server to run the scraper
+  const btn = $('#sync'), status = $('#sync-status');
+  btn.hidden = false;
+  const api = (method, url = '/api/sync') => fetch(url, { method, headers: { 'X-Sync-Token': token } }).then(r => r.json());
+  const lastLine = job => (job.log || []).filter(l => !l.startsWith('—')).slice(-1)[0] || '';
+  function show(job) {
+    status.classList.remove('err');
+    demoBtn.disabled = job.running;
+    if (job.running) {
+      btn.disabled = true; btn.classList.add('busy');
+      status.textContent = 'מסנכרן… ' + lastLine(job);
+      setTimeout(poll, 1500);
+      return;
+    }
+    btn.disabled = false; btn.classList.remove('busy');
+    if (!job.finishedAt) return;
+    if (job.ok) {
+      // reload only if this page watched the sync run; the finished job stays on the server,
+      // so reloading on every load would loop forever
+      if (!reloadAfter) return;
+      reloadAfter = false;
+      status.textContent = 'הסתיים, טוען…'; location.reload(); return;
+    }
+    status.classList.add('err');
+    status.textContent = 'הסנכרון נכשל חלקית: ' + (job.failed[0] || lastLine(job));
+    status.title = job.failed.join('\n');
+  }
+  let reloadAfter = false;
+  function poll() {
+    api('GET').then(job => {
+      if (job.running) reloadAfter = true;
+      // a partial failure still saved the other sources: reload once so their data shows
+      if (!job.running && reloadAfter && !job.ok && job.finishedAt && !sessionStorage.getItem('synced-' + job.finishedAt)) {
+        try { sessionStorage.setItem('synced-' + job.finishedAt, '1'); } catch (e) {}
+        location.reload();
+        return;
+      }
+      show(job);
+    }).catch(() => { status.textContent = 'השרת לא זמין'; btn.disabled = false; btn.classList.remove('busy'); });
+  }
+  btn.addEventListener('click', () => {
+    btn.disabled = true; btn.classList.add('busy');
+    status.textContent = 'מתחיל סנכרון…';
+    reloadAfter = true;
+    api('POST').then(show).catch(() => { status.textContent = 'השרת לא זמין'; btn.disabled = false; btn.classList.remove('busy'); });
+  });
+  // demo data: fills the dashboard with generated data (kept in data/demo-*.json, apart from your own), or goes back
+  const demoBtn = $('#demo');
+  demoBtn.hidden = false;
+  demoBtn.textContent = D?.demo ? 'חזרה לנתונים שלי' : 'נתוני דוגמה';
+  demoBtn.title = D?.demo ? 'הצגת הנתונים שלכם במקום נתוני הדוגמה' : 'מילוי הדשבורד בנתונים מומצאים, בלי להתחבר לשום בנק';
+  window.startDemo = on => {
+    btn.disabled = true; btn.classList.add('busy'); demoBtn.disabled = true;
+    status.textContent = on ? 'יוצר נתוני דוגמה…' : 'טוען את הנתונים שלכם…';
+    reloadAfter = true;
+    api('POST', '/api/demo?on=' + (on ? 1 : 0)).then(show).catch(() => { status.textContent = 'השרת לא זמין'; btn.disabled = false; btn.classList.remove('busy'); demoBtn.disabled = false; });
+  };
+  demoBtn.addEventListener('click', () => window.startDemo(!D?.demo));
+  poll(); // pick up a sync already running, or the result of the last one
+})();
+
+if (!D) {
+  document.querySelector('main').replaceChildren(window.SYNC_TOKEN
+    ? h('div', { class: 'empty' },
+        h('p', { text: 'אין עדיין נתונים. מלאו את פרטי ההתחברות בקובץ .env ולחצו "סנכרון", או נסו קודם עם נתונים מומצאים:' }),
+        h('button', { type: 'button', class: 'sync-btn', style: 'margin:12px auto 0', text: 'מילוי בנתוני דוגמה', onclick: () => window.startDemo(true) }))
+    : h('p', { class: 'empty', text: 'אין עדיין נתונים. הריצו "npm run dashboard" (או "npm run demo" לנתוני דוגמה) וטענו את הדף מחדש.' }));
+  return;
+}
+
+// ---------- helpers ----------
+const fmtNum = v => Math.abs(Math.round(v)).toLocaleString('en-US');
+// "1,234 ₪" in Hebrew order; the sign goes before the number inside an LTR isolate
+function amt(v, { sign = false, cls = '' } = {}) {
+  const s = v < 0 ? '−' : sign && v > 0 ? '+' : '';
+  return h('span', { class: 'amt ' + cls }, h('bdi', { dir: 'ltr', text: s + fmtNum(v) }), h('span', { class: 'cur', text: '₪' }));
+}
+const amtText = (v, sign) => `${(v < 0 ? '−' : sign && v > 0 ? '+' : '')}${fmtNum(v)} ₪`;
+const monthName = (m, withYear = true) => new Date(m + '-15T12:00:00').toLocaleDateString('he-IL', withYear ? { month: 'long', year: 'numeric' } : { month: 'long' });
+const monthShort = m => new Date(m + '-15T12:00:00').toLocaleDateString('he-IL', { month: 'short' });
+const addMonths = (m, n) => { const [y, mo] = m.split('-').map(Number); return new Date(Date.UTC(y, mo - 1 + n, 1)).toISOString().slice(0, 7); };
+const monthDiff = (a, b) => { const [ya, ma] = a.split('-').map(Number), [yb, mb] = b.split('-').map(Number); return (yb - ya) * 12 + (mb - ma); };
+const monthRange = (a, b) => { const out = []; for (let m = a; m <= b; m = addMonths(m, 1)) out.push(m); return out; };
+const sum = a => a.reduce((s, v) => s + v, 0);
+const mean = a => (a.length ? sum(a) / a.length : 0);
+const sd = a => { if (a.length < 2) return 0; const m = mean(a); return Math.sqrt(sum(a.map(v => (v - m) ** 2)) / (a.length - 1)); };
+const median = a => { if (!a.length) return 0; const s = [...a].sort((x, y) => x - y); const i = s.length >> 1; return s.length % 2 ? s[i] : (s[i - 1] + s[i]) / 2; };
+const normDesc = d => d.toLowerCase().replace(/[0-9*#\-_.\/\\]+/g, ' ').replace(/\s+/g, ' ').trim();
+const shortDate = d => d.slice(5).split('-').reverse().join('/');
+const chev = () => { const s = svg('svg', { class: 'chev', viewBox: '0 0 24 24', 'aria-hidden': 'true' }); svg('path', { d: 'M6 9l6 6 6-6' }, s); return s; };
+
+// "today" is the later of the browser's date (in Israel) and the build's, so opening the page on the 1st
+// of a new month switches to that month even before a sync
+const BROWSER_TODAY = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Jerusalem' }).format(new Date());
+const TODAY = BROWSER_TODAY > D.today ? BROWSER_TODAY : D.today;
+const FM = TODAY.slice(0, 7);
+const MONTHS = monthRange(D.firstFullMonth || FM, FM);
+const ALL = D.transactions.filter(t => t.kind !== 'card-bill');
+const byMonth = new Map();
+for (const t of ALL) { if (!byMonth.has(t.m)) byMonth.set(t.m, []); byMonth.get(t.m).push(t); }
+const rowsOf = m => byMonth.get(m) || [];
+const prevMonths = (m, n) => MONTHS.filter(x => x < m).slice(-n);
+
+$('#demo-flag').hidden = !D.demo;
+$('#updated').textContent = 'עודכן ' + new Date(D.generatedAt).toLocaleDateString('he-IL', { day: 'numeric', month: 'numeric' });
+
+// ---------- the cash-flow model for one month ----------
+function actuals(m) {
+  const rows = rowsOf(m);
+  const pick = (kind, flow) => rows.filter(t => t.kind === kind && (!flow || t.flow === flow));
+  const s = rs => sum(rs.map(t => t.amt));
+  return {
+    rows,
+    incFixed: pick('income', 'fixed'), incVar: pick('income', 'variable'),
+    expFixed: pick('spend', 'fixed'), expVar: pick('spend', 'variable'),
+    outIn: rows.filter(t => t.kind === 'ignored' && t.dir === 'in'),
+    outOut: rows.filter(t => t.kind === 'ignored' && t.dir === 'out'),
+    s,
+  };
+}
+
+// Fixed items (salary, rent, loans, subscriptions): which were paid this month and which are still
+// expected. An item is expected when its usual gap since the last payment (1 or 2 months) has passed.
+function fixedPlan(m, kind) {
+  const paid = new Map(), pending = [];
+  const series = new Map();
+  for (const t of ALL) {
+    if (t.kind !== kind || t.flow !== 'fixed') continue;
+    const key = t.instT ? (t.plan || `${t.key}|${t.instT}|${Math.round(t.amt)}`) : t.key; // one plan per purchase
+    if (!series.has(key)) series.set(key, { desc: t.desc, cat: t.cat, months: new Map(), inst: !!t.instT, rows: [] });
+    const s = series.get(key);
+    s.months.set(t.m, (s.months.get(t.m) || 0) + t.amt);
+    s.rows.push(t);
+  }
+  for (const [key, s] of series) {
+    if (s.months.has(m)) {
+      const rows = s.rows.filter(t => t.m === m);
+      paid.set(key, { desc: s.desc, amt: s.months.get(m), rows, inst: rows.find(t => t.instT) });
+      // several charges a month (e.g. 3 insurance policies) and only some arrived yet: the rest is still expected
+      if (m === FM && !s.inst) {
+        const last = [...s.months.keys()].filter(x => x < m).sort().pop();
+        const lastRows = last ? s.rows.filter(t => t.m === last) : [];
+        if (last && monthDiff(last, m) <= 2 && rows.length < lastRows.length) {
+          const paidNow = new Set(rows.map(t => Math.round(t.amt)));
+          const missing = lastRows.filter(t => !paidNow.has(Math.round(t.amt)));
+          const rest = sum(missing.map(t => t.amt));
+          if (rest > 0) pending.push({ key, desc: s.desc, cat: s.cat, src: s.rows[0].src, amt: rest, note: `עוד ${missing.length} מתוך ${lastRows.length} חיובים החודש`,
+            day: Math.round(median(missing.map(t => +t.d.slice(8, 10)))) });
+        }
+      }
+      continue;
+    }
+    if (m !== FM) continue;
+    const seen = [...s.months.keys()].filter(x => x < m).sort();
+    if (!seen.length) continue;
+    const last = seen[seen.length - 1];
+    if (s.inst) {
+      const lastRow = s.rows.filter(t => t.m === last).sort((a, b) => b.instN - a.instN)[0];
+      if (monthDiff(last, m) === 1 && lastRow.instN < lastRow.instT) {
+        pending.push({ key, desc: s.desc, cat: s.cat, src: s.rows[0].src, amt: lastRow.amt, note: `תשלום ${lastRow.instN + 1}/${lastRow.instT}` });
+      }
+      continue;
+    }
+    const gaps = seen.slice(1).map((x, i) => monthDiff(seen[i], x));
+    const gap = gaps.length ? Math.max(1, Math.min(2, Math.round(median(gaps)))) : 1;
+    // due when its usual gap has passed. Income (paid by others, e.g. ביטוח לאומי) can come late, so one
+    // missed cycle still counts as due; an expense that skipped a cycle has usually ended (a summer
+    // activity, a cancelled subscription), so it isn't expected again
+    const since = monthDiff(last, m);
+    const maxSince = kind === 'income' ? 2 * gap : gap;
+    if (since >= gap && since <= maxSince && since % gap === 0) {
+      // usual day of the month it arrives, from its real dates (salary moved to the next month keeps its own date)
+      const day = Math.round(median(s.rows.map(t => +t.d.slice(8, 10))));
+      pending.push({ key, desc: s.desc, cat: s.cat, src: s.rows[0].src, amt: s.months.get(last), day, note: gap === 2 ? 'פעם בחודשיים' : '' });
+    }
+  }
+  // payees removed from the forecast in the dashboard ("הסרה מהצפי") from their month on
+  const isStopped = p => { const st = D.stopExpecting?.[p.key]; return st && st.from <= m; };
+  return {
+    paid: [...paid.values()].sort((a, b) => b.amt - a.amt),
+    pending: pending.filter(p => !isStopped(p)).sort((a, b) => b.amt - a.amt),
+    stopped: pending.filter(isStopped),
+  };
+}
+
+// ---------- variable spending, split into parts ----------
+// Each tracked card is one part; every other variable category is its own part. A part's expected
+// amount ("צפוי לצאת") is the amount saved in the dashboard (from the month it was set on), or else
+// the average of the previous 3 months.
+const GROUP_OF_CAT = new Map();
+for (const g of D.tracked || []) for (const c of g.categories) GROUP_OF_CAT.set(c, g.name);
+const partKey = cat => (GROUP_OF_CAT.has(cat) ? 'group:' + GROUP_OF_CAT.get(cat) : 'cat:' + cat);
+const partName = key => key.slice(key.indexOf(':') + 1);
+function budgetFor(key, m) {
+  const entry = (D.budgets?.[key] || []).filter(e => e.from <= m).pop();
+  return entry && entry.amount != null ? entry.amount : null;
+}
+function varParts(m, A, prev) {
+  const prevA = prev.map(actuals);
+  const keys = new Set((D.tracked || []).map(g => 'group:' + g.name));
+  for (const a of [A, ...prevA]) for (const t of a.expVar) keys.add(partKey(t.cat));
+  for (const k of Object.keys(D.budgets || {})) if (budgetFor(k, m) != null) keys.add(k);
+  return [...keys].map(key => {
+    const inPart = t => partKey(t.cat) === key;
+    const rows = A.expVar.filter(inPart);
+    const spent = sum(rows.map(t => t.amt));
+    // one-off charges (e.g. an unplanned flight) count in their own month but not in later months' averages
+    const avg = prev.length ? mean(prevA.map(a => sum(a.expVar.filter(t => inPart(t) && !t.oneOff).map(t => t.amt)))) : null;
+    const budget = budgetFor(key, m);
+    const expected = budget ?? avg; // null: no history and nothing saved
+    return { key, name: partName(key), tracked: key.startsWith('group:'), rows, spent, avg, budget, expected };
+  });
+}
+
+function model(m) {
+  const A = actuals(m);
+  const isCurrent = m === FM;
+  const prev = prevMonths(m, 3);
+  const avgVar = prev.length ? mean(prev.map(x => actuals(x).s(actuals(x).expVar.filter(t => !t.oneOff)))) : null;
+  const parts = varParts(m, A, prev);
+  const fe = fixedPlan(m, 'spend'), fi = fixedPlan(m, 'income');
+  const inc = { fixed: A.s(A.incFixed), variable: A.s(A.incVar) };
+  const exp = { fixed: A.s(A.expFixed), variable: A.s(A.expVar) };
+  const incSoFar = inc.fixed + inc.variable;
+  const expSoFar = exp.fixed + exp.variable;
+  const pendIncome = sum(fi.pending.map(x => x.amt));
+  const pendFixed = sum(fe.pending.map(x => x.amt));
+  // planned: what the parts were expected to cost; overspent: how far parts went past it.
+  // This month's variable forecast: every part costs its expected amount, or what was already spent if more.
+  const varPlanned = sum(parts.map(p => p.expected ?? p.spent));
+  const varOver = sum(parts.map(p => Math.max(0, p.spent - (p.expected ?? p.spent))));
+  const varExpected = isCurrent ? varPlanned + varOver : exp.variable;
+  const incExpected = incSoFar + (isCurrent ? pendIncome : 0);
+  const fixedExpected = exp.fixed + (isCurrent ? pendFixed : 0);
+  const balance = isCurrent ? incExpected - fixedExpected - varExpected : incSoFar - expSoFar;
+  return { m, A, isCurrent, prev, avgVar, parts, varPlanned, varOver, fe, fi, inc, exp, incSoFar, expSoFar, incExpected, fixedExpected, varExpected, balance };
+}
+
+// ---------- components ----------
+function bar(color, ratio) {
+  const r = Math.max(0, Math.min(1, ratio || 0));
+  return h('div', { class: 'bar', style: `background: color-mix(in srgb, var(${color}) 20%, var(--surface))`, role: 'img',
+    'aria-label': `${Math.round(r * 100)}%` },
+    h('span', { style: `width:${(r * 100).toFixed(1)}%; background: var(${color})` }));
+}
+function figs(doneLabel, done, endLabel, end, colorText) {
+  return h('div', { class: 'figs' },
+    h('div', { class: 'fig' }, h('div', { class: 'k', text: doneLabel }), h('div', { class: 'v', style: `color: var(${colorText})` }, amt(done))),
+    h('div', { class: 'fig end' }, h('div', { class: 'k', text: endLabel }), h('div', { class: 'v' }, end == null ? '–' : amt(end))));
+}
+function expandable(title, extra, content, open) {
+  return h('details', { open },
+    h('summary', null, h('span', { class: 'grow', text: title }), extra || null, chev()),
+    h('div', { class: 'inner' }, content));
+}
+function txnRows(rows, { emptyText = 'אין תנועות' } = {}) {
+  if (!rows.length) return h('p', { class: 'hint', text: emptyText });
+  return h('ul', { class: 'rows' }, rows.slice().sort((a, b) => (a.d < b.d ? 1 : -1)).map(t => h('li', null,
+    h('span', { class: 'name', text: t.desc }),
+    h('span', { class: 'val' }, amt(t.amt)),
+    h('span', { class: 'meta' }, `${shortDate(t.d)} · ${t.cat} · ${t.src}`,
+      t.pend ? h('span', { class: 'tag', text: 'ממתין' }) : null,
+      t.early ? h('span', { class: 'tag', text: 'נכנס בסוף החודש הקודם' }) : null,
+      t.late ? h('span', { class: 'tag', text: 'נכנס באיחור בתחילת החודש הבא' }) : null,
+      t.instT ? h('span', { class: 'tag', text: `תשלום ${t.instN}/${t.instT}` }) : null,
+      t.fx ? h('bdi', { class: 'tag', dir: 'ltr', text: t.fx }) : null,
+      t.oneOff ? h('span', { class: 'tag manual', text: 'חד־פעמי' }) : null,
+      t.ov ? h('span', { class: 'tag manual', text: t.ov === 'merchant' ? 'שונה ידנית (בית העסק)' : 'שונה ידנית' }) : null,
+      editButton(t)))));
+}
+// "שינוי" opens the edit dialog; only when served by `npm run dashboard` (it saves through the server)
+function editButton(t) {
+  if (!window.SYNC_TOKEN || !t || !t.id) return null;
+  return h('button', { type: 'button', class: 'edit-btn', text: 'שינוי', 'aria-label': `שינוי קטגוריה: ${t.desc}`, onclick: () => openEdit(t) });
+}
+function planRows(plan, { showPending, income = false }) {
+  const included = income ? 'נכלל ב"צפוי להיכנס"' : 'נכלל ב"צפוי לצאת"';
+  const pendingMeta = p => [p.day ? `${income ? 'נכנס' : 'יורד'} בדרך כלל בסביבות ה־${p.day} לחודש` : null, p.note || null, included]
+    .filter(Boolean).join(' · ');
+  const items = [
+    ...plan.paid.map(p => h('li', null,
+      h('span', { class: 'name' }, p.desc, h('span', { class: 'check', text: '✓', title: 'שולם' })),
+      h('span', { class: 'val' }, amt(p.amt)),
+      h('span', { class: 'meta' },
+        p.inst ? `תשלום ${p.inst.instN}/${p.inst.instT}`
+          : p.rows.some(t => t.early || t.late) ? `נכנס ב־${shortDate(p.rows.find(t => t.early || t.late).d)}, נספר בחודש הזה` : null,
+        p.rows.length === 1 ? editButton(p.rows[0]) : null))),
+    ...(showPending ? plan.pending.map(p => h('li', { class: 'pending' },
+      h('span', { class: 'name' }, p.desc, h('span', { class: 'tag', text: 'צפוי' })),
+      h('span', { class: 'val' }, amt(p.amt)),
+      h('span', { class: 'meta' }, pendingMeta(p), stopButton(p, false)))) : []),
+  ];
+  const list = items.length ? h('ul', { class: 'rows' }, items) : h('p', { class: 'hint', text: 'אין' });
+  // removed from the forecast: listed (struck through) so they can be restored
+  if (!showPending || !plan.stopped?.length) return list;
+  return h('div', null, list, h('div', { class: 'hint', style: 'margin-top:10px', text: 'הוסרו מהצפי:' }),
+    h('ul', { class: 'rows' }, plan.stopped.map(p => h('li', { class: 'pending' },
+      h('span', { class: 'name', style: 'text-decoration:line-through', text: p.desc }),
+      h('span', { class: 'val', style: 'text-decoration:line-through' }, amt(p.amt)),
+      h('span', { class: 'meta' }, 'לא נספר בתחזית', stopButton(p, true))))));
+}
+// "הסרה מהצפי": stop expecting a fixed payee from this month on (served mode only)
+function stopButton(p, restore) {
+  if (!window.SYNC_TOKEN || !p.key) return null;
+  return h('button', { type: 'button', class: 'edit-btn', text: restore ? 'החזרה' : 'הסרה מהצפי',
+    'aria-label': `${restore ? 'החזרה לצפי' : 'הסרה מהצפי'}: ${p.desc}`,
+    onclick: async e => {
+      if (!restore && !confirm(`להפסיק לצפות ל"${p.desc}" מהחודש הזה והלאה?\nאם יגיע חיוב בפועל, הוא עדיין ייספר.`)) return;
+      e.target.disabled = true;
+      e.target.textContent = 'שומר…';
+      try {
+        const res = await fetch('/api/stop-expect', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Sync-Token': window.SYNC_TOKEN },
+          body: JSON.stringify(restore ? { key: p.key, reset: true } : { key: p.key }) });
+        const out = await res.json().catch(() => ({}));
+        if (!res.ok || !out.ok) throw new Error(out.error === 'busy' ? 'סנכרון רץ כרגע, נסו שוב בעוד רגע' : (res.status === 404 ? OLD_SERVER : (out.error || 'השמירה נכשלה')));
+        location.reload();
+      } catch (err) {
+        alert(err.message);
+        e.target.disabled = false;
+        e.target.textContent = restore ? 'החזרה' : 'הסרה מהצפי';
+      }
+    } });
+}
+function byCategory(rows) {
+  const g = new Map();
+  for (const t of rows) { if (!g.has(t.cat)) g.set(t.cat, []); g.get(t.cat).push(t); }
+  return [...g].map(([cat, rs]) => ({ cat, rows: rs, total: sum(rs.map(t => t.amt)) })).sort((a, b) => b.total - a.total);
+}
+function leftoverLine(expected, done, label = 'נשאר להוציא') {
+  const left = expected - done;
+  if (left >= 0) return h('div', { class: 'leftover' }, `${label} `, amt(left));
+  return h('div', { class: 'leftover over' }, 'חריגה של ', amt(-left));
+}
+
+// ---------- cards ----------
+// Bank balance (from the last sync) and card charges that haven't been taken from the account yet:
+// every card row whose charge day is after today, whatever its category (an excluded row is still charged).
+// ---------- balance forecast (תחזית יתרה) ----------
+// From the bank balance at the last sync, day by day until the 5th of next month (past the salary and the
+// card bills), using money as it actually leaves/enters the bank account:
+//   • card charges already known (card rows whose charge day is still ahead), on their charge day
+//   • the rest of this month's expected card spending (variable at its card share + fixed paid by card),
+//     on the main card's next charge day — an estimate
+//   • fixed bank items still expected this month (direct debits, salary, allowances) on their usual day
+//   • the rest of this month's expected variable spending paid from the bank (transfers, cash) — estimate, month end
+//   • next month's fixed bank items that come on the 1st–5th (salary, mortgage, loans)
+const BANK_NAMES = new Set((D.sources || []).filter(s => s.kind === 'bank').map(s => s.name));
+const isBank = src => BANK_NAMES.has(src);
+const dayInMonth = (m, d) => {
+  const last = new Date(+m.slice(0, 4), +m.slice(5, 7), 0).getDate();
+  return `${m}-${String(Math.min(Math.max(1, d), last)).padStart(2, '0')}`;
+};
+const addDays = (day, n) => new Date(Date.UTC(+day.slice(0, 4), +day.slice(5, 7) - 1, +day.slice(8, 10) + n)).toISOString().slice(0, 10);
+
+// A planned item has "arrived" when a bank transaction with the same direction and amount (±1%) shows up
+// between 3 days before and 7 days after its date; from then on the real one counts and the plan is dropped.
+// Not arrived a week after its date → "missed" (kept in the list so you can delete it).
+const signedBank = t => (t.kind === 'income' ? t.amt : t.kind === 'ignored' ? (t.dir === 'in' ? t.amt : -t.amt) : -t.amt);
+function plannedStatus(p) {
+  const from = addDays(p.day, -3), to = addDays(p.day, 7);
+  const hit = D.transactions.find(t => isBank(t.src) && t.kind !== 'card-bill' && t.d >= from && t.d <= to
+    && Math.sign(signedBank(t)) === Math.sign(p.amount) && Math.abs(Math.abs(signedBank(t)) - Math.abs(p.amount)) <= Math.max(1, Math.abs(p.amount) * 0.01));
+  if (hit) return 'arrived';
+  return to < TODAY ? 'missed' : 'pending';
+}
+
+function balanceForecast(M, start) {
+  const next = addMonths(FM, 1);
+  const end = `${next}-05`;
+  const tomorrow = addDays(TODAY, 1);
+  const events = [];
+  const add = (day, amount, label, estimate) => { if (Math.round(amount)) events.push({ day: day < tomorrow ? tomorrow : day, amount, label, estimate }); };
+
+  // known card charges (already-made purchases, installments)
+  const charged = t => (t.kind === 'ignored' ? (t.dir === 'out' ? t.amt : -t.amt) : t.amt);
+  const cardDays = new Map();
+  for (const t of D.transactions) {
+    if (!t.pd || t.pd <= TODAY || t.pd > end || t.kind === 'card-bill') continue;
+    const k = `${t.src}|${t.pd}`;
+    cardDays.set(k, (cardDays.get(k) || 0) + charged(t));
+  }
+  for (const [k, v] of cardDays) { const [src, d] = k.split('|'); add(d, -v, `חיוב ${src} (מה שכבר ידוע)`); }
+
+  // the rest of this month's card spending → the main card's next charge day
+  const prev3 = prevMonths(FM, 3);
+  const varRows = prev3.flatMap(m => actuals(m).expVar);
+  const cardShare = varRows.length ? sum(varRows.filter(t => !isBank(t.src)).map(t => t.amt)) / Math.max(1, sum(varRows.map(t => t.amt))) : 1;
+  const varLeft = Math.max(0, M.varExpected - M.exp.variable);
+  const fixedCardLeft = sum(M.fe.pending.filter(p => p.src && !isBank(p.src)).map(p => p.amt));
+  const cardTotals = new Map();
+  for (const t of D.transactions) if (t.pd && t.pd.startsWith(next)) cardTotals.set(t.src, (cardTotals.get(t.src) || 0) + charged(t));
+  const mainCard = [...cardTotals].sort((a, b) => b[1] - a[1])[0]?.[0];
+  const mainDay = [...cardDays.keys()].map(k => k.split('|')).filter(([src]) => src === mainCard).map(([, d]) => d).sort()[0] || `${next}-02`;
+  add(mainDay, -(varLeft * cardShare + fixedCardLeft), 'עוד חיובי אשראי צפויים על החודש הזה', true);
+
+  // fixed bank items still expected this month
+  for (const p of M.fe.pending) if (!p.src || isBank(p.src)) add(dayInMonth(FM, p.day || 28), -p.amt, p.desc);
+  for (const p of M.fi.pending) if (!p.src || isBank(p.src)) add(dayInMonth(FM, p.day || 28), p.amt, p.desc);
+  // variable spending from the bank itself (transfers, cash) — estimate, by month end
+  add(dayInMonth(FM, 31), -varLeft * (1 - cardShare), 'הוצאות משתנות מהעו״ש (הערכה)', true);
+
+  // next month: fixed bank items that usually come on the 1st–5th (salary, mortgage, loans)
+  const stopped = key => { const st = D.stopExpecting?.[key]; return st && st.from <= next; };
+  for (const kind of ['income', 'spend']) {
+    const series = new Map();
+    for (const t of ALL) {
+      if (t.kind !== kind || t.flow !== 'fixed' || t.instT || !isBank(t.src)) continue;
+      if (!series.has(t.key)) series.set(t.key, []);
+      series.get(t.key).push(t);
+    }
+    for (const [key, rows] of series) {
+      const months = [...new Set(rows.map(t => t.m))].sort();
+      const last = months[months.length - 1];
+      if (!last || monthDiff(last, FM) > 1 || months.includes(next) || stopped(key)) continue;
+      // real payment days; for a boundary payer (≥30% of payments on the 1st–5th, e.g. a salary paid on the
+      // 31st or the 1st) a payment on the 25th+ is next month's, so it counts as the 1st. ביטוח לאומי (~27th) is not one.
+      const raw = rows.map(t => +t.d.slice(8, 10));
+      const boundary = kind === 'income' && raw.filter(d => d <= 5).length / raw.length >= 0.3;
+      const days = raw.map(d => (boundary && d >= 25 ? 1 : d));
+      const day = Math.round(median(days));
+      if (day > 5) continue;
+      const amount = sum(rows.filter(t => t.m === last).map(t => t.amt));
+      add(dayInMonth(next, day), kind === 'income' ? amount : -amount, `${rows[0].desc} (${monthName(next, false)})`);
+    }
+  }
+
+  // planned items you entered (e.g. a fund sale arriving on Sunday), until the real transaction shows up
+  for (const p of D.planned || []) {
+    const st = plannedStatus(p);
+    if (st === 'pending') add(p.day, p.amount, `${p.label} (מתוכנן)`);
+  }
+
+  events.sort((a, b) => (a.day < b.day ? -1 : a.day > b.day ? 1 : b.amount - a.amount)); // same day: money in first
+  let bal = start, low = { bal: start, day: TODAY };
+  for (const e of events) { bal += e.amount; e.bal = bal; if (bal < low.bal) low = { bal, day: e.day, label: e.label }; }
+  return { events, low, endBalance: bal, end, cardShare };
+}
+
+// Balance forecast chart: one point per day from today to the end of the window. Step line of the balance,
+// ₪ scale with gridlines, date ticks every few days, a dot on each day with money movement (green in, red out),
+// shading below zero, and a crosshair that snaps to the nearest day with a tooltip (balance + that day's items).
+// Keyboard: focus the chart, ← / → move a day (RTL: ← is later), Home/End jump to the ends.
+// a round step for an axis: 1, 2, 2.5 or 5 × a power of 10, about `ticks` steps across `span`
+function niceStep(span, ticks) {
+  const raw = span / ticks;
+  const p = 10 ** Math.floor(Math.log10(raw));
+  const f = raw / p;
+  return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p;
+}
+
+function forecastChart(start, fc) {
+  const host = h('div', { class: 'chart fc-chart' });
+  const tip = h('div', { class: 'fc-tip', hidden: true });
+  const hint = h('div', { class: 'hint', style: 'margin-top:2px', text: 'העבירו את העכבר על הגרף (או השתמשו בחצים) כדי לראות את היתרה הצפויה בכל יום.' });
+  const wrap = h('div', { style: 'position:relative;margin:10px 0 2px' }, host, tip);
+
+  // daily series: balance at the end of each day
+  const byDay = new Map();
+  for (const e of fc.events) { if (!byDay.has(e.day)) byDay.set(e.day, []); byDay.get(e.day).push(e); }
+  const series = [];
+  let bal = start;
+  for (let d = TODAY; d <= fc.end; d = addDays(d, 1)) {
+    const evs = byDay.get(d) || [];
+    bal += sum(evs.map(e => e.amount));
+    series.push({ d, bal, evs, net: sum(evs.map(e => e.amount)) });
+  }
+  const weekday = d => new Date(d + 'T12:00:00').toLocaleDateString('he-IL', { weekday: 'long' });
+  let current = null; // selected day index (hover / keyboard)
+
+  const draw = () => {
+    const W = Math.max(280, host.clientWidth || 420), H = 230;
+    const m = { t: 14, b: 30, l: 6, r: 62 }; // value labels on the right (RTL)
+    const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const vals = series.map(p => p.bal);
+    const loRaw = Math.min(0, ...vals), hiRaw = Math.max(...vals, 1);
+    const step = niceStep(hiRaw - loRaw || 1, 4);
+    const lo = Math.floor(loRaw / step) * step, hi = Math.ceil(hiRaw / step) * step;
+    const n = series.length;
+    // RTL: today on the right, later days to the left
+    const x = i => m.l + iw - (n > 1 ? (i / (n - 1)) * iw : 0);
+    const y = v => m.t + (1 - (v - lo) / (hi - lo || 1)) * ih;
+    const root = svg('svg', { viewBox: `0 0 ${W} ${H}`, height: H, direction: 'ltr', role: 'img',
+      'aria-label': `תחזית יתרה מ־${shortDate(TODAY)} עד ${shortDate(fc.end)}: היום ${amtText(start)}, הנמוכה ביותר ${amtText(fc.low.bal)} ב־${shortDate(fc.low.day)}, בסוף ${amtText(fc.endBalance)}` });
+
+    // gridlines + ₪ labels
+    for (let v = lo; v <= hi + 1e-9; v += step) {
+      svg('line', { x1: m.l, x2: m.l + iw, y1: y(v), y2: y(v), stroke: v === 0 ? 'var(--text-muted)' : 'var(--hairline)', 'stroke-width': v === 0 ? 1.2 : 1 }, root);
+      const t = svg('text', { x: m.l + iw + 8, y: y(v) + 4, 'text-anchor': 'start', 'font-size': 11, fill: 'var(--text-muted)' }, root);
+      t.textContent = (v < 0 ? '−' : '') + '₪' + Math.abs(v).toLocaleString('en-US');
+    }
+    // below zero: red band
+    if (lo < 0) svg('rect', { x: m.l, y: y(0), width: iw, height: y(lo) - y(0), fill: 'var(--negative)', 'fill-opacity': 0.07 }, root);
+
+    // start of next month: dashed marker with the month name
+    const firstNext = series.findIndex(p => p.d.endsWith('-01') && p.d > TODAY);
+    if (firstNext > 0) {
+      svg('line', { x1: x(firstNext), x2: x(firstNext), y1: m.t, y2: m.t + ih, stroke: 'var(--text-muted)', 'stroke-dasharray': '3 3', 'stroke-width': 1 }, root);
+      const t = svg('text', { x: x(firstNext) - 4, y: m.t + 10, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--text-muted)', direction: 'rtl' }, root);
+      t.textContent = monthName(series[firstNext].d.slice(0, 7), false);
+    }
+
+    // area + step line
+    let line = `M${x(0)},${y(series[0].bal)}`;
+    for (let i = 1; i < n; i++) line += `H${x(i)}V${y(series[i].bal)}`;
+    const base = y(Math.max(lo, 0));
+    svg('path', { d: `${line}V${base}H${x(0)}Z`, fill: 'var(--income)', 'fill-opacity': 0.08 }, root);
+    svg('path', { d: line, fill: 'none', stroke: fc.low.bal < 0 ? 'var(--negative)' : 'var(--income)', 'stroke-width': 2, 'stroke-linejoin': 'round' }, root);
+
+    // dots on days with money movement
+    series.forEach((p, i) => {
+      if (!p.evs.length) return;
+      svg('circle', { cx: x(i), cy: y(p.bal), r: 4, fill: p.net >= 0 ? 'var(--income)' : 'var(--negative)', stroke: 'var(--surface)', 'stroke-width': 1.5 }, root);
+    });
+    // lowest point
+    const li = series.findIndex(p => p.d === fc.low.day);
+    if (li >= 0) {
+      svg('circle', { cx: x(li), cy: y(series[li].bal), r: 6, fill: 'none', stroke: fc.low.bal < 0 ? 'var(--negative)' : 'var(--text-secondary)', 'stroke-width': 2 }, root);
+    }
+
+    // date ticks: about every 3–4 days (more on wide screens), always today and the last day
+    const every = Math.max(1, Math.ceil(n / Math.max(5, Math.floor(iw / 44)))); // a label every ~44px
+    series.forEach((p, i) => {
+      if (i % every !== 0 && i !== n - 1) return;
+      if (i !== n - 1 && x(i) - x(n - 1) < 40) return; // keep the last label from colliding
+      svg('line', { x1: x(i), x2: x(i), y1: m.t + ih, y2: m.t + ih + 4, stroke: 'var(--text-muted)' }, root);
+      const t = svg('text', { x: x(i), y: H - 8, 'text-anchor': i === 0 ? 'end' : i === n - 1 ? 'start' : 'middle', 'font-size': 11,
+        fill: i === 0 ? 'var(--text-primary)' : 'var(--text-muted)', 'font-weight': i === 0 ? 600 : 400 }, root);
+      t.textContent = i === 0 ? 'היום' : shortDate(p.d);
+    });
+
+    // crosshair layer
+    const cross = svg('line', { y1: m.t, y2: m.t + ih, stroke: 'var(--text-secondary)', 'stroke-width': 1, visibility: 'hidden', 'pointer-events': 'none' }, root);
+    const dot = svg('circle', { r: 5, fill: 'var(--surface)', stroke: 'var(--text-primary)', 'stroke-width': 2, visibility: 'hidden', 'pointer-events': 'none' }, root);
+    const overlay = svg('rect', { x: m.l, y: 0, width: iw, height: H, fill: 'transparent', tabindex: 0, style: 'cursor:crosshair;outline:none',
+      'aria-label': 'גרף תחזית יתרה. חצים לזוז בין הימים.' }, root);
+
+    const show = i => {
+      current = Math.max(0, Math.min(n - 1, i));
+      const p = series[current];
+      cross.setAttribute('x1', x(current)); cross.setAttribute('x2', x(current)); cross.setAttribute('visibility', 'visible');
+      dot.setAttribute('cx', x(current)); dot.setAttribute('cy', y(p.bal)); dot.setAttribute('visibility', 'visible');
+      tip.replaceChildren(...[
+        h('div', { class: 'fc-tip-date', text: `${weekday(p.d)}, ${shortDate(p.d)}${p.d === TODAY ? ' (היום)' : ''}` }),
+        h('div', { class: 'fc-tip-bal ' + (p.bal < 0 ? 'neg' : '') }, amt(p.bal)),
+        h('div', { class: 'fc-tip-k', text: 'יתרה צפויה בסוף היום' }),
+        ...(p.evs.length ? [...p.evs].sort((a, b) => Math.abs(b.amount) - Math.abs(a.amount)).slice(0, 4).map(e => h('div', { class: 'fc-tip-row' },
+          h('span', { class: 'fc-tip-name', text: e.label + (e.estimate ? ' (הערכה)' : '') }),
+          h('span', { class: e.amount < 0 ? 'neg' : 'pos' }, amt(e.amount, { sign: true }))))
+          : [h('div', { class: 'fc-tip-k', text: 'אין תנועות צפויות ביום הזה' })]),
+        p.evs.length > 4 ? h('div', { class: 'fc-tip-k', style: 'margin-top:3px' }, `ועוד ${p.evs.length - 4} תנועות קטנות · סה״כ היום `, amt(p.net, { sign: true })) : null,
+      ].filter(Boolean));
+      tip.hidden = false;
+      // place the tooltip beside the crosshair, inside the chart
+      const scale = host.clientWidth / W;
+      const px = x(current) * scale;
+      const tw = tip.offsetWidth;
+      const left = px - tw - 12 >= 0 ? px - tw - 12 : Math.min(px + 12, host.clientWidth - tw);
+      tip.style.left = `${Math.max(0, left)}px`;
+      // above the point when there's room, always within the chart's height
+      const th = tip.offsetHeight, chartH = H * scale, py = y(p.bal) * scale;
+      tip.style.top = `${Math.max(0, Math.min(py - th - 10 >= 0 ? py - th - 10 : py + 10, chartH - th))}px`;
+    };
+    const hide = () => { cross.setAttribute('visibility', 'hidden'); dot.setAttribute('visibility', 'hidden'); tip.hidden = true; current = null; };
+    const indexAt = clientX => {
+      const r = root.getBoundingClientRect();
+      const px = (clientX - r.left) * (W / r.width);
+      return Math.round(((m.l + iw - px) / iw) * (n - 1));
+    };
+    overlay.addEventListener('pointermove', e => show(indexAt(e.clientX)));
+    overlay.addEventListener('pointerdown', e => show(indexAt(e.clientX)));
+    overlay.addEventListener('pointerleave', hide);
+    overlay.addEventListener('blur', hide);
+    overlay.addEventListener('focus', () => show(current ?? 0));
+    overlay.addEventListener('keydown', e => {
+      const moves = { ArrowLeft: 1, ArrowRight: -1, Home: -Infinity, End: Infinity };
+      if (!(e.key in moves)) return;
+      e.preventDefault();
+      const mv = moves[e.key];
+      show(mv === Infinity ? n - 1 : mv === -Infinity ? 0 : (current ?? 0) + mv);
+    });
+    host.replaceChildren(root);
+    if (current != null) show(current);
+  };
+  requestAnimationFrame(draw);
+  addEventListener('resize', () => requestAnimationFrame(draw));
+  return h('div', null, wrap, hint);
+}
+
+function balanceCard(M) {
+  if (!M.isCurrent || !(D.balances || []).length) return null;
+  const known = D.balances.filter(b => b.balance != null);
+  const total = sum(known.map(b => b.balance));
+  const asOf = known[0]?.asOf || D.balances[0].asOf;
+  const asOfText = asOf ? new Date(asOf).toLocaleString('he-IL', { day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+  const head = h('div', { class: 'card-body' },
+    h('h3', { text: 'יתרה בעו״ש' }),
+    known.length
+      ? h('div', { class: 'big ' + (total >= 0 ? 'pos' : 'neg'), style: 'font-size:34px;font-weight:600;text-align:left' }, amt(total))
+      : h('p', { class: 'hint', text: 'היתרה תופיע אחרי הסנכרון הבא, ואיתה תחזית היתרה.' }),
+    h('div', { class: 'hint' }, `נכון לסנכרון האחרון (${asOfText})`,
+      D.balances.length > 1 ? ' · ' + D.balances.map(b => `${b.src} ${b.account}`).join(', ') : ''));
+  const planned = plannedSection();
+  if (!known.length) return h('section', { class: 'card' }, head, planned);
+
+  const fc = balanceForecast(M, total);
+  const warn = fc.low.bal < 0;
+  head.append(...[
+    h('div', { class: 'leftover' + (warn ? ' over' : ''), style: 'margin-top:12px' },
+      warn ? ['⚠ צפויה ירידה למינוס של ', amt(-fc.low.bal), ` ב־${shortDate(fc.low.day)}`, fc.low.label ? ` (אחרי: ${fc.low.label})` : '']
+        : ['היתרה הנמוכה הצפויה: ', amt(fc.low.bal), ` ב־${shortDate(fc.low.day)}`]),
+    forecastChart(total, fc),
+    h('div', { class: 'hint' }, `יתרה צפויה ב־${shortDate(fc.end)}: `, amt(fc.endBalance)),
+  ].filter(Boolean)); // append() would print a null as the text "null"
+  const list = h('ul', { class: 'rows' }, fc.events.map(e => h('li', { class: e.estimate ? 'pending' : null },
+    h('span', { class: 'name' }, `${shortDate(e.day)} · ${e.label}`, e.estimate ? h('span', { class: 'tag', text: 'הערכה' }) : null),
+    h('span', { class: 'val' }, amt(e.amount, { sign: true })),
+    h('span', { class: 'meta' }, 'יתרה אחרי: ', amt(e.bal)))));
+  return h('section', { class: 'card' }, head,
+    expandable('תחזית יתרה יום אחרי יום', null, h('div', null,
+      h('p', { class: 'hint', style: 'margin:0 0 6px', text: `כסף כפי שהוא יוצא ונכנס לעו״ש: רכישות באשראי יורדות ביום החיוב של הכרטיס. ${Math.round(fc.cardShare * 100)}% מההוצאות המשתנות הן באשראי (3 חודשים אחרונים).` }),
+      list)),
+    planned);
+}
+
+// a 404 on a save means the running server predates this page's features: it needs a restart
+const OLD_SERVER = 'שרת הדשבורד שפועל עכשיו הוא גרסה ישנה. עצרו אותו (Ctrl+C בחלון שבו הוא רץ) והריצו שוב npm run dashboard.';
+// ---------- saving from the balance card (served mode only) ----------
+const canSave = () => !!window.SYNC_TOKEN;
+async function postJSON(url, body) {
+  const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Sync-Token': window.SYNC_TOKEN }, body: JSON.stringify(body) });
+  const out = await res.json().catch(() => ({}));
+  if (!res.ok || !out.ok) throw new Error(out.error === 'busy' ? 'סנכרון רץ כרגע, נסו שוב בעוד רגע' : (res.status === 404 ? OLD_SERVER : (out.error || 'השמירה נכשלה')));
+  location.reload();
+}
+
+// Planned items: money you already arranged that the bank doesn't show yet (a transfer arriving on Sunday,
+// a tax refund, a big planned payment). They count in the balance forecast until the real one arrives.
+function plannedSection() {
+  const items = (D.planned || []).map(p => ({ ...p, status: plannedStatus(p) })).sort((a, b) => (a.day < b.day ? -1 : 1));
+  const statusText = { pending: 'נכלל בתחזית', arrived: 'הגיע בפועל ✓ (לא נספר שוב)', missed: 'לא הגיע עד שבוע אחרי התאריך' };
+  const list = items.length ? h('ul', { class: 'rows' }, items.map(p => h('li', { class: p.status === 'pending' ? null : 'pending' },
+    h('span', { class: 'name', text: `${shortDate(p.day)} · ${p.label}` }),
+    h('span', { class: 'val ' + (p.amount < 0 ? 'neg' : 'pos') }, amt(p.amount, { sign: true })),
+    h('span', { class: 'meta' }, statusText[p.status],
+      canSave() ? h('button', { type: 'button', class: 'edit-btn', text: 'מחיקה', onclick: () => postJSON('/api/planned', { action: 'delete', id: p.id }).catch(e => alert(e.message)) }) : null))))
+    : h('p', { class: 'hint', text: 'אין תנועות מתוכננות.' });
+  const form = canSave() ? (() => {
+    const day = h('input', { type: 'date', value: addDays(TODAY, 1), min: TODAY, 'aria-label': 'תאריך' });
+    const dir = h('select', { 'aria-label': 'כיוון' }, h('option', { value: '1', text: 'נכנס לעו״ש' }), h('option', { value: '-1', text: 'יוצא מהעו״ש' }));
+    const amount = h('input', { type: 'text', inputmode: 'numeric', placeholder: 'סכום', 'aria-label': 'סכום', dir: 'ltr', style: 'width:90px;text-align:right' });
+    const label = h('input', { type: 'text', placeholder: 'תיאור (למשל: החזר מס)', 'aria-label': 'תיאור', maxlength: 60 });
+    const btn = h('button', { type: 'button', class: 'sync-btn', style: 'padding:6px 12px', text: 'הוספה' });
+    btn.addEventListener('click', () => {
+      const v = Number(amount.value.replace(/[,₪\s]/g, ''));
+      if (!v || v <= 0) { alert('צריך להזין סכום'); return; }
+      if (!label.value.trim()) { alert('צריך תיאור'); return; }
+      btn.disabled = true;
+      postJSON('/api/planned', { action: 'add', day: day.value, amount: v * Number(dir.value), label: label.value.trim() })
+        .catch(e => { alert(e.message); btn.disabled = false; });
+    });
+    return h('div', { class: 'planned-form' }, day, dir, amount, label, btn);
+  })() : null;
+  return expandable(`תנועות מתוכננות${items.filter(p => p.status === 'pending').length ? ` (${items.filter(p => p.status === 'pending').length})` : ''}`, null,
+    h('div', null, h('p', { class: 'hint', style: 'margin:0 0 6px', text: 'כסף שכבר סידרת והבנק עוד לא מראה (למשל העברה שתיכנס ביום ראשון). נכלל בתחזית היתרה עד שהתנועה האמיתית מגיעה.' }),
+      list, form));
+}
+
+function heroCard(M) {
+  const positive = M.balance >= 0;
+  const lead = M.isCurrent
+    ? `${monthName(M.m, false)} צפוי להסתיים בתזרים ${positive ? 'חיובי' : 'שלילי'} של:`
+    : `${monthName(M.m, false)} הסתיים בתזרים ${positive ? 'חיובי' : 'שלילי'} של:`;
+  const expTotal = M.isCurrent ? M.fixedExpected + M.varExpected : M.expSoFar;
+  const incTotal = M.isCurrent ? M.incExpected : M.incSoFar;
+  return h('section', { class: 'card hero' },
+    h('div', { class: 'card-body' },
+      h('p', { class: 'lead', text: positive ? (M.isCurrent ? 'הולך טוב! ' : 'מעולה! ') + lead : lead }),
+      h('div', { class: 'big ' + (positive ? 'pos' : 'neg') }, amt(M.balance)),
+      M.isCurrent ? h('div', { class: 'so-far' }, 'עד עכשיו נכנסו ', amt(M.incSoFar), ' ויצאו ', amt(M.expSoFar)) : null),
+    h('div', { class: 'foot' },
+      h('span', { text: M.isCurrent ? 'סה״כ הכנסות צפויות' : 'סה״כ הכנסות' }), h('span', { class: 'v pos' }, amt(incTotal, { sign: true })),
+      h('span', { text: M.isCurrent ? 'סה״כ הוצאות צפויות' : 'סה״כ הוצאות' }), h('span', { class: 'v' }, amt(-expTotal))),
+    M.isCurrent ? expandable('איך חישבנו?', null, forecastBreakdown(M)) : null);
+}
+
+// Every component of the month's forecast, so the hero number can be checked by hand.
+function forecastBreakdown(M) {
+  const pendInc = sum(M.fi.pending.map(x => x.amt)), pendFixed = sum(M.fe.pending.map(x => x.amt));
+  const varLeft = M.varExpected - M.exp.variable;
+  const line = (label, v, note, strong) => h('li', null,
+    h('span', { class: 'name', style: strong ? 'font-weight:600' : null, text: label }),
+    h('span', { class: 'val', style: strong ? 'font-weight:600' : null }, amt(v, { sign: true })),
+    note ? h('span', { class: 'meta', text: note }) : null);
+  return h('ul', { class: 'rows' },
+    line('הכנסות שכבר נכנסו', M.incSoFar),
+    line('הכנסות קבועות שעוד צפויות', pendInc, M.fi.pending.map(x => x.desc).join(', ') || 'אין'),
+    line('הוצאות קבועות ששולמו', -M.exp.fixed, `${M.fe.paid.length} חיובים`),
+    line('הוצאות קבועות שעוד צפויות', -pendFixed, M.fe.pending.length ? `${M.fe.pending.length} חיובים: ${M.fe.pending.slice(0, 4).map(x => x.desc).join(', ')}${M.fe.pending.length > 4 ? '…' : ''}` : 'אין'),
+    line('הוצאות משתנות עד עכשיו', -M.exp.variable),
+    line('עוד צפוי בהוצאות משתנות', -varLeft, 'לכל קטגוריה: הצפי שלה פחות מה שכבר יצא (ממוצע 3 חודשים או סכום שקבעת)'),
+    line('תזרים צפוי לסוף החודש', M.balance, null, true));
+}
+
+// What is left to spend on variable expenses this month: the sum of what each category still has
+// before reaching its expected amount. The same numbers as the "הוצאות משתנות" card and the forecast.
+function variableLeftCard(M) {
+  if (!M.isCurrent) return null;
+  const left = M.varExpected - M.exp.variable; // = Σ max(0, expected − spent) per category
+  const today = new Date(TODAY + 'T12:00:00');
+  const daysLeft = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate() - today.getDate() + 1;
+  const overParts = M.parts.filter(p => p.expected != null && p.spent > p.expected).sort((a, b) => (b.spent - b.expected) - (a.spent - a.expected));
+  return h('section', { class: 'card' }, h('div', { class: 'card-body' },
+    h('p', { class: 'lead', style: 'font-size:19px;font-weight:500;margin:0', text: 'כמה נשאר להוציא על הוצאות משתנות החודש?' }),
+    h('div', { class: 'big pos', style: 'font-size:40px;font-weight:600;text-align:left;margin-top:6px' }, amt(left)),
+    h('div', { class: 'hint' }, 'מתוך ', amt(M.varExpected), ' צפוי לצאת · יצא עד עכשיו ', amt(M.exp.variable),
+      ` · נשארו ${daysLeft} ימים בחודש`),
+    overParts.length ? h('div', { class: 'leftover over' }, 'חריגה של ', amt(M.varOver), ' ב־',
+      overParts.slice(0, 3).map(p => p.name).join(', '), overParts.length > 3 ? ' ועוד' : '', ' (נכלל בתחזית)') : null));
+}
+
+function compareCard(M) {
+  const months = MONTHS.filter(x => x <= M.m).slice(-6);
+  const vals = months.map(x => (x === M.m ? M.balance : model(x).balance));
+  const host = h('div', { class: 'chart' });
+  const card = h('section', { class: 'card' }, h('div', { class: 'card-body' },
+    h('h2', { text: `${monthName(M.m, false)} ביחס לחודשים אחרים` }), host,
+    h('p', { class: 'hint', style: 'margin:6px 0 0', text: 'התזרים של כל חודש: הכנסות פחות הוצאות. לחיצה על חודש עוברת אליו.' })));
+  const draw = () => {
+    const W = Math.max(260, host.clientWidth || 400), H = 230;
+    const mg = { t: 26, b: 56 }; // bottom keeps room for a negative bar's value label above the month labels
+    const max = Math.max(1, ...vals.map(Math.abs));
+    const hasNeg = vals.some(v => v < 0), hasPos = vals.some(v => v >= 0);
+    const zero = hasNeg && hasPos ? mg.t + (H - mg.t - mg.b) * (Math.max(...vals) / (Math.max(...vals) - Math.min(...vals)))
+      : hasNeg ? mg.t : H - mg.b;
+    const scale = (H - mg.t - mg.b) / (hasNeg && hasPos ? Math.max(...vals) - Math.min(...vals) : max);
+    const band = W / months.length, bw = Math.min(22, band * 0.4);
+    const root = svg('svg', { viewBox: `0 0 ${W} ${H}`, height: H, direction: 'ltr', role: 'img',
+      'aria-label': 'תזרים חודשי: ' + months.map((x, i) => `${monthName(x, false)} ${amtText(vals[i], true)}`).join(', ') });
+    svg('line', { x1: 0, x2: W, y1: zero, y2: zero, stroke: 'var(--hairline)', 'stroke-width': 1.5 }, root);
+    months.forEach((x, i) => {
+      // RTL: oldest month on the right
+      const cx = W - band * (i + 0.5);
+      const v = vals[i], hgt = Math.max(3, Math.abs(v) * scale);
+      const sel = x === M.m;
+      const color = v >= 0 ? 'var(--income)' : 'var(--negative)';
+      const g = svg('g', { class: 'm-bar', tabindex: 0, 'aria-label': `${monthName(x)}: ${amtText(v, true)}` }, root);
+      const tt = svg('title', {}, g); tt.textContent = `${monthName(x)}${x === FM ? ' (צפי)' : ''}: ${amtText(v, true)}`;
+      svg('rect', { class: 'hit', x: cx - band / 2 + 2, y: 2, width: band - 4, height: H - 4, rx: 8, fill: 'transparent' }, g);
+      const y = v >= 0 ? zero - hgt : zero;
+      svg('rect', { x: cx - bw / 2, y, width: bw, height: hgt, rx: bw / 2, fill: color, 'fill-opacity': sel ? 1 : 0.32,
+        stroke: x === FM ? color : 'none', 'stroke-dasharray': x === FM ? '3 2' : null, 'stroke-width': x === FM ? 1.5 : 0 }, g);
+      const lbl = svg('text', { x: cx, y: v >= 0 ? y - 7 : y + hgt + 15, 'text-anchor': 'middle', 'font-size': 12,
+        'font-weight': sel ? 600 : 400, fill: sel ? 'var(--text-primary)' : 'var(--text-muted)' }, g);
+      lbl.textContent = (v > 0 ? '+' : v < 0 ? '−' : '') + fmtNum(v);
+      const ml = svg('text', { x: cx, y: H - 10, 'text-anchor': 'middle', 'font-size': 12, direction: 'rtl',
+        'font-weight': sel ? 600 : 400, fill: sel ? 'var(--text-primary)' : 'var(--text-muted)' }, g);
+      ml.textContent = monthShort(x) + (x === FM ? ' (צפי)' : '');
+      const go = () => { state.month = x; render(); };
+      g.addEventListener('click', go);
+      g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    });
+    host.replaceChildren(root);
+  };
+  requestAnimationFrame(draw);
+  card._redraw = draw;
+  return card;
+}
+
+function incomeCard(M) {
+  const end = M.isCurrent ? M.incExpected : (M.prev.length ? mean(M.prev.map(x => model(x).incSoFar)) : null);
+  return h('section', { class: 'card' },
+    h('div', { class: 'card-body' },
+      h('h2', { text: 'הכנסות' }),
+      figs(M.isCurrent ? 'נכנס עד עכשיו' : 'נכנס', M.incSoFar, M.isCurrent ? 'צפוי להיכנס' : 'ממוצע 3 חודשים קודמים', end, '--income-text'),
+      bar('--income', end ? M.incSoFar / end : 1),
+      M.isCurrent && M.fi.pending.length ? h('div', { class: 'leftover' }, 'עוד צפוי להיכנס החודש: ',
+        amt(sum(M.fi.pending.map(x => x.amt))), ` (${M.fi.pending.map(x => x.desc).join(', ')})`) : null),
+    expandable('פירוט הכנסות קבועות', h('span', { class: 'hint' }, amt(M.inc.fixed)), planRows(M.fi, { showPending: M.isCurrent, income: true })),
+    expandable('פירוט הכנסות משתנות', h('span', { class: 'hint' }, amt(M.inc.variable)), txnRows(M.A.incVar)));
+}
+
+function fixedCard(M) {
+  const end = M.isCurrent ? M.fixedExpected : (M.prev.length ? mean(M.prev.map(x => model(x).exp.fixed)) : null);
+  return h('section', { class: 'card' },
+    h('div', { class: 'card-body' },
+      h('h2', { text: 'הוצאות קבועות' }),
+      figs(M.isCurrent ? 'יצא עד עכשיו' : 'יצא', M.exp.fixed, M.isCurrent ? 'צפוי לצאת' : 'ממוצע 3 חודשים קודמים', end, '--fixed-text'),
+      bar('--fixed', end ? M.exp.fixed / end : 1),
+      M.isCurrent && M.fe.pending.length ? h('div', { class: 'leftover' }, `עוד ${M.fe.pending.length} חיובים צפויים החודש בסך `, amt(sum(M.fe.pending.map(x => x.amt)))) : null),
+    expandable('פירוט חודשי לפי קבוצה', null, fixedGroupList(M)));
+}
+
+// ---------- fixed expenses grouped (rules.json → fixedGroups) ----------
+// A payee goes to the group named like its category (set with "שינוי"), else the first group whose
+// pattern matches its description, else the first group listing its category, else the last group.
+const FIXED_GROUPS = (D.fixedGroups || []).map(g => ({ ...g, re: g.pattern ? new RegExp(g.pattern, 'i') : null }));
+function fixedGroupOf(desc, cat) {
+  if (!FIXED_GROUPS.length) return 'כל ההוצאות הקבועות';
+  return (FIXED_GROUPS.find(g => g.name === cat)
+    || FIXED_GROUPS.find(g => g.re && g.re.test(desc))
+    || FIXED_GROUPS.find(g => (g.categories || []).includes(cat))
+    || FIXED_GROUPS[FIXED_GROUPS.length - 1]).name;
+}
+function fixedGroupList(M) {
+  const names = FIXED_GROUPS.length ? FIXED_GROUPS.map(g => g.name) : ['כל ההוצאות הקבועות'];
+  const of = item => fixedGroupOf(item.desc, item.cat ?? item.rows?.[0]?.cat);
+  const groups = names.map(name => {
+    const plan = {
+      paid: M.fe.paid.filter(p => of(p) === name),
+      pending: M.fe.pending.filter(p => of(p) === name),
+      stopped: (M.fe.stopped || []).filter(p => of(p) === name),
+    };
+    return { name, plan, paid: sum(plan.paid.map(p => p.amt)), pending: M.isCurrent ? sum(plan.pending.map(p => p.amt)) : 0 };
+  }).filter(g => g.plan.paid.length || (M.isCurrent && (g.plan.pending.length || g.plan.stopped.length)));
+  if (!groups.length) return h('p', { class: 'hint', text: 'אין' });
+  return h('div', null, groups.map(g => expandable(g.name,
+    h('span', { class: 'hint' }, 'שולם ', amt(g.paid), g.pending ? [' · עוד צפוי ', amt(g.pending)] : null),
+    planRows(g.plan, { showPending: M.isCurrent }))));
+}
+
+// where a part's expected amount comes from, plus the "שינוי" link (current month, served mode only)
+function expectedSource(p, M) {
+  return h('div', { class: 'hint', style: 'margin-top:6px' },
+    p.budget != null ? 'צפוי לצאת לפי סכום שקבעת' : p.avg != null ? 'צפוי לצאת לפי ממוצע 3 החודשים הקודמים' : 'אין עדיין היסטוריה לחישוב צפי',
+    M.isCurrent && window.SYNC_TOKEN
+      ? h('button', { type: 'button', class: 'edit-btn', text: 'שינוי הצפי', 'aria-label': `שינוי הצפוי לצאת: ${p.name}`, onclick: () => openBudget(p) })
+      : null);
+}
+
+// a category that would read "יצא ₪0 · צפוי ₪0" (after rounding) is not shown
+const isShown = p => Math.round(p.spent) !== 0 || Math.round(p.expected ?? 0) !== 0;
+function partList(M) {
+  // every category that spent or is expected to, so the rows add up to the card's "צפוי לצאת"
+  const forecastOf = p => Math.max(p.spent, p.expected ?? p.spent);
+  const parts = M.parts.filter(isShown).sort((a, b) => forecastOf(b) - forecastOf(a));
+  if (!parts.length) return h('p', { class: 'hint', text: 'אין תנועות' });
+  return h('div', null, parts.map(p => expandable(p.name,
+    h('span', { class: 'hint' + (p.expected != null && p.spent > p.expected ? ' neg' : '') },
+      'יצא ', amt(p.spent), p.expected != null ? [' · צפוי ', amt(p.expected)] : null),
+    h('div', null, expectedSource(p, M), txnRows(p.rows)))));
+}
+
+function variableCard(M) {
+  // current month: the forecast (each category at its expected amount, or what it already spent if more),
+  // so "צפוי לצאת" − "יצא עד עכשיו" = "נשאר להוציא"
+  const end = M.isCurrent ? M.varExpected : M.varPlanned || M.avgVar;
+  return h('section', { class: 'card' },
+    h('div', { class: 'card-body' },
+      h('h2', { text: 'הוצאות משתנות' }),
+      figs(M.isCurrent ? 'יצא עד עכשיו' : 'יצא', M.exp.variable, M.isCurrent ? 'צפוי לצאת' : 'צפוי היה לצאת', end, '--variable-text'),
+      bar('--variable', end ? M.exp.variable / end : 1),
+      // current month: the same per-category "left" as the widget (an overspent category doesn't use up the others)
+      M.isCurrent
+        ? [h('div', { class: 'leftover' }, 'נשאר להוציא ', amt(M.varExpected - M.exp.variable)),
+           M.varOver ? h('div', { class: 'leftover over' }, 'הצפי כולל חריגה של ', amt(M.varOver), ' בקטגוריות שכבר עברו את הצפי שלהן (', amt(M.varPlanned), ' לפי הצפי + ', amt(M.varOver), ')') : null]
+        : end != null ? leftoverLine(end, M.exp.variable, 'פחות מהצפוי ב־') : null,
+      h('div', { class: 'hint', style: 'margin-top:6px', text: 'הצפי הוא סכום הצפי של כל הקטגוריות. אפשר לשנות אותו לכל קטגוריה בפירוט למטה.' })),
+    expandable('פירוט חודשי לפי קטגוריה', null, partList(M)));
+}
+
+function trackedCards(M) {
+  return M.parts.filter(p => p.tracked).map(p => {
+    if (!isShown(p)) return null;
+    return h('section', { class: 'card' },
+      h('div', { class: 'card-body' },
+        h('h2', { text: p.name }),
+        figs(M.isCurrent ? 'יצא עד עכשיו' : 'יצא', p.spent, M.isCurrent ? 'צפוי לצאת' : 'צפוי היה לצאת', p.expected, '--tracked-text'),
+        bar('--tracked', p.expected ? p.spent / p.expected : 1),
+        p.expected != null ? leftoverLine(p.expected, p.spent, M.isCurrent ? 'נשאר להוציא' : 'פחות מהצפוי ב־') : null,
+        expectedSource(p, M)),
+      expandable('פירוט חודשי', null, txnRows(p.rows)));
+  }).filter(Boolean);
+}
+
+// ---------- installments and loans (current month) ----------
+// Installment plans from the card data: the latest known payment of each plan → payments left, amount left,
+// last month. Loans: monthly bank payments (the bank doesn't send the remaining principal).
+function debtCard(M) {
+  if (!M.isCurrent) return null;
+  const plans = new Map();
+  for (const t of ALL) {
+    if (t.kind !== 'spend' || !t.instT) continue;
+    const k = t.plan || `${t.key}|${t.instT}|${Math.round(t.amt)}`; // one plan per purchase (voucher)
+    const cur = plans.get(k);
+    if (!cur || t.instN > cur.instN) plans.set(k, t);
+  }
+  const active = [...plans.values()].map(t => {
+    const left = t.instT - t.instN;
+    return { desc: t.desc, src: t.src, amt: t.amt, n: t.instN, total: t.instT, left, leftAmt: left * t.amt, last: addMonths(t.m, left) };
+  }).filter(p => p.last >= FM).sort((a, b) => b.leftAmt - a.leftAmt);
+  const loanRows = ALL.filter(t => t.kind === 'spend' && t.flow === 'fixed' && !t.instT && fixedGroupOf(t.desc, t.cat) === 'הלוואות');
+  const recent = prevMonths(FM, 3).concat(FM);
+  const loans = new Map();
+  for (const t of loanRows) {
+    if (!recent.includes(t.m)) continue;
+    if (!loans.has(t.key)) loans.set(t.key, { desc: t.desc, months: new Map() });
+    const l = loans.get(t.key);
+    l.months.set(t.m, (l.months.get(t.m) || 0) + t.amt);
+  }
+  const loanList = [...loans.values()].map(l => ({ desc: l.desc, monthly: mean([...l.months.values()]), lastMonth: [...l.months.keys()].sort().pop() }))
+    .filter(l => l.lastMonth >= prevMonths(FM, 1)[0]).sort((a, b) => b.monthly - a.monthly);
+  if (!active.length && !loanList.length) return null;
+  const monthlyInst = sum(active.filter(p => p.left > 0 || p.last === FM).map(p => p.amt));
+  const leftInst = sum(active.map(p => p.leftAmt));
+  return h('section', { class: 'card' },
+    h('div', { class: 'card-body' },
+      h('h2', { text: 'תשלומים והלוואות' }),
+      h('div', { class: 'figs' },
+        h('div', { class: 'fig' }, h('div', { class: 'k', text: 'נשאר לשלם בתשלומים' }), h('div', { class: 'v', style: 'color:var(--fixed-text)' }, amt(leftInst))),
+        h('div', { class: 'fig end' }, h('div', { class: 'k', text: 'לחודש (תשלומים + הלוואות)' }), h('div', { class: 'v' }, amt(monthlyInst + sum(loanList.map(l => l.monthly)))))),
+      h('p', { class: 'hint', style: 'margin:4px 0 0', text: 'יתרת הקרן של הלוואות מהבנק לא מגיעה בנתונים, לכן מוצג רק התשלום החודשי.' })),
+    active.length ? expandable(`תשלומים באשראי (${active.length})`, h('span', { class: 'hint' }, amt(leftInst)),
+      h('ul', { class: 'rows' }, active.map(p => h('li', null,
+        h('span', { class: 'name', text: p.desc }),
+        h('span', { class: 'val' }, amt(p.leftAmt)),
+        h('span', { class: 'meta', text: `${amtText(p.amt)} לחודש · שולמו ${p.n} מתוך ${p.total} · ${p.left ? `עוד ${p.left} תשלומים, אחרון ב־${monthName(p.last)}` : 'התשלום האחרון'} · ${p.src}` }))))) : null,
+    loanList.length ? expandable(`הלוואות (${loanList.length})`, null,
+      h('ul', { class: 'rows' }, loanList.map(l => h('li', null,
+        h('span', { class: 'name', text: l.desc }),
+        h('span', { class: 'val' }, amt(l.monthly)),
+        h('span', { class: 'meta', text: 'ממוצע חודשי (3 חודשים אחרונים)' }))))) : null);
+}
+
+// ---------- sync status per source ----------
+const ERROR_NAMES = { INVALID_PASSWORD: 'סיסמה שגויה', CHANGE_PASSWORD: 'נדרשת החלפת סיסמה', ACCOUNT_BLOCKED: 'החשבון חסום',
+  TIMEOUT: 'פג הזמן', GENERIC: 'שגיאה כללית (ייתכן חסימת בוט)', CRASH: 'קריסה', TWO_FACTOR_RETRIEVER_MISSING: 'נדרש קוד SMS' };
+const STALE_DAYS = 3;
+function sourceStatus(s) {
+  const failedAfter = s.lastFailure && (!s.lastScrape || s.lastFailure.at > s.lastScrape);
+  const ageDays = s.lastScrape ? (Date.now() - Date.parse(s.lastScrape)) / 86400000 : Infinity;
+  if (failedAfter) return { level: 'error', text: `הסנכרון האחרון נכשל: ${ERROR_NAMES[s.lastFailure.errorType] || s.lastFailure.errorType}` };
+  if (ageDays > STALE_DAYS) return { level: 'warn', text: s.lastScrape ? `לא סונכרן ${Math.floor(ageDays)} ימים` : 'עוד לא סונכרן' };
+  return { level: 'ok', text: 'תקין' };
+}
+const fmtTime = iso => (iso ? new Date(iso).toLocaleString('he-IL', { day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—');
+function syncCard() {
+  const list = (D.sources || []).map(s => ({ s, st: sourceStatus(s) }));
+  if (!list.length) return null;
+  return h('section', { class: 'card' }, h('div', { class: 'card-body' },
+    h('h2', { text: 'מצב סנכרון' }),
+    h('ul', { class: 'rows' }, list.map(({ s, st }) => h('li', null,
+      h('span', { class: 'name' }, h('span', { class: st.level === 'ok' ? 'pos' : 'neg', style: 'font-weight:700', text: st.level === 'ok' ? '✓ ' : '⚠ ' }), s.name),
+      h('span', { class: 'val ' + (st.level === 'ok' ? '' : 'neg'), text: st.text }),
+      h('span', { class: 'meta', text: `סנכרון מוצלח אחרון: ${fmtTime(s.lastScrape)}${s.lastFailure ? ` · כישלון אחרון: ${fmtTime(s.lastFailure.at)}` : ''}` }))))));
+}
+
+function outsideCard(M) {
+  const inSum = M.A.s(M.A.outIn), outSum = M.A.s(M.A.outOut);
+  if (!inSum && !outSum) return null;
+  return h('section', { class: 'card' },
+    h('div', { class: 'card-body' },
+      h('h2', { text: 'לא בתזרים' }),
+      h('div', { class: 'gap-row' }, h('span', { text: 'סיכום פער לא בתזרים:' }), h('span', { class: inSum - outSum < 0 ? 'neg' : 'pos' }, amt(inSum - outSum))),
+      h('p', { class: 'hint', style: 'margin:8px 0 0', text: 'חיסכון, השקעות, הלוואות שהתקבלו והעברות שלא נספרות כהכנסה או כהוצאה.' })),
+    expandable('פירוט הכנסות לא תזרימיות', h('span', { class: 'hint' }, amt(inSum)), txnRows(M.A.outIn)),
+    expandable('פירוט הוצאות לא תזרימיות', h('span', { class: 'hint' }, amt(outSum)), txnRows(M.A.outOut)));
+}
+
+// ---------- unusual costs (same detection as before, for the selected month) ----------
+function findAlerts(m) {
+  const months = MONTHS;
+  const spend = ALL.filter(t => t.kind === 'spend');
+  const cell = new Map();
+  for (const t of spend) { const k = t.m + '|' + t.cat; if (!cell.has(k)) cell.set(k, []); cell.get(k).push(t); }
+  const val = (x, c) => sum((cell.get(x + '|' + c) || []).map(t => t.amt));
+  const cats = [...new Set(spend.map(t => t.cat))];
+  const out = [];
+  const prior6 = months.filter(x => x < m).slice(-6);
+  if (prior6.length >= 3) {
+    for (const c of cats) {
+      const vals = prior6.map(x => val(x, c)), v = val(m, c), mu = mean(vals), s = sd(vals);
+      const nonZero = vals.filter(x => x > 0);
+      const usual = nonZero.length && nonZero.length <= vals.length * 2 / 3 ? mean(nonZero) : mu;
+      if (v - mu >= 250 && v > mu + Math.max(2 * s, 0.25 * mu) && v - usual >= 250 && v > usual * 1.4) {
+        const top = (cell.get(m + '|' + c) || []).slice().sort((a, b) => b.amt - a.amt).slice(0, 2);
+        out.push({ kind: 'קפיצה בקטגוריה', impact: v - usual, title: c,
+          detail: `${amtText(v)} לעומת ${amtText(usual)} בדרך כלל. הגדולות: ${top.map(t => `${t.desc} ${amtText(t.amt)}`).join(' · ')}` });
+      }
+    }
+  }
+  const firstSeen = new Map();
+  for (const t of spend.slice().sort((a, b) => (a.d < b.d ? -1 : 1))) { const k = normDesc(t.desc); if (!firstSeen.has(k)) firstSeen.set(k, t.d); }
+  // single purchases: only itemized variable spending (a mortgage or a lump card bill is not a "purchase")
+  for (const t of spend) {
+    if (t.m !== m || t.amt < 400 || (t.instT && t.instN !== 1)) continue;
+    if ((t.flow === 'fixed' && !t.instT) || t.cat.endsWith('ללא פירוט')) continue;
+    const full = t.instT ? t.amt * t.instT : t.amt;
+    const prior = spend.filter(x => x.cat === t.cat && x.d < t.d && x.m >= addMonths(m, -12) && !x.instT).map(x => x.amt);
+    const typical = median(prior);
+    // a merchant you regularly pay this much (weekly online groceries) is not unusual
+    const sameMerchant = spend.filter(x => normDesc(x.desc) === normDesc(t.desc) && x.d < t.d && x.m >= addMonths(m, -12)).map(x => x.amt);
+    const usualHere = sameMerchant.length >= 2 && median(sameMerchant) >= 0.6 * t.amt;
+    const big = prior.length >= 5 && t.amt >= 3 * typical && !usualHere;
+    const isNew = firstSeen.get(normDesc(t.desc)) === t.d && full >= 1000 && months.indexOf(m) >= 3;
+    if (big || isNew) out.push({ kind: 'רכישה גדולה', impact: full, title: t.desc,
+      detail: `${amtText(t.amt)}${t.instT ? ` (תשלום 1 מתוך ${t.instT}, סה״כ ${amtText(full)})` : ''} · ${t.cat} · ${big ? `פי ${(t.amt / typical).toFixed(1)} מרכישה רגילה בקטגוריה` : 'פעם ראשונה אצל בית העסק'}` });
+  }
+  const merchants = new Map();
+  for (const t of spend) {
+    if (t.instT) continue;
+    const k = normDesc(t.desc);
+    if (!merchants.has(k)) merchants.set(k, { desc: t.desc, months: new Map() });
+    const mm = merchants.get(k).months; mm.set(t.m, (mm.get(t.m) || 0) + t.amt);
+  }
+  for (const mer of merchants.values()) {
+    const ms = [...mer.months.keys()].sort();
+    if (!mer.months.has(m)) continue;
+    const window3 = [addMonths(m, -2), addMonths(m, -1), m].filter(x => mer.months.has(x));
+    if (window3.length >= 2 && ms[0] >= addMonths(m, -2) && months.indexOf(ms[0]) >= 6) {
+      const a = window3.map(x => mer.months.get(x));
+      if (Math.max(...a) <= 1.15 * Math.min(...a) && mean(a) >= 10)
+        out.push({ kind: 'חיוב קבוע חדש', impact: mean(a) * 12, title: mer.desc, detail: `כ־${amtText(mean(a))} בחודש מאז ${monthName(ms[0])} · כ־${amtText(mean(a) * 12)} בשנה` });
+    }
+    const pm = [addMonths(m, -1), addMonths(m, -2), addMonths(m, -3)];
+    if (pm.every(x => mer.months.has(x))) {
+      const pa = pm.map(x => mer.months.get(x)), p = median(pa), now = mer.months.get(m);
+      if (Math.max(...pa) <= 1.05 * Math.min(...pa) && now >= p * 1.08 && now - p >= 5)
+        out.push({ kind: 'עליית מחיר', impact: (now - p) * 12, title: mer.desc, detail: `${amtText(p)} ← ${amtText(now)} בחודש (+${Math.round((now / p - 1) * 100)}%) · כ־${amtText((now - p) * 12)} יותר בשנה` });
+    }
+  }
+  // possible double charge: same card merchant, same amount, the same or the next day (separate transactions).
+  // Can be legitimate (two tickets, two vouchers) — it's a "worth checking", not an error.
+  const cardSpend = spend.filter(t => t.m === m && !isBank(t.src) && !t.instT && t.amt >= 20);
+  const byCharge = new Map();
+  for (const t of cardSpend) {
+    const k = `${t.src}|${normDesc(t.desc)}|${Math.round(t.amt * 100)}`;
+    if (!byCharge.has(k)) byCharge.set(k, []);
+    byCharge.get(k).push(t);
+  }
+  for (const rows of byCharge.values()) {
+    if (rows.length < 2) continue;
+    rows.sort((a, b) => (a.d < b.d ? -1 : 1));
+    const close = rows.filter((t, i) => rows.some((u, j) => j !== i && Math.abs(Date.parse(t.d) - Date.parse(u.d)) <= 86400000));
+    if (close.length < 2) continue;
+    out.push({ kind: 'חיוב כפול אפשרי', impact: close[0].amt * (close.length - 1) + 1e6, title: close[0].desc,
+      detail: `${close.length} חיובים של ${amtText(close[0].amt)} ב־${close.map(t => shortDate(t.d)).join(', ')} · ${close[0].src} · אם זה לא אתם — כדאי לבדוק מול חברת האשראי` });
+  }
+  return out.sort((a, b) => b.impact - a.impact);
+}
+
+function alertsCard(M) {
+  const alerts = findAlerts(M.m);
+  return h('section', { class: 'card' }, h('div', { class: 'card-body' },
+    h('h2', { text: 'שווה לבדוק' }),
+    alerts.length
+      ? h('ul', { class: 'alerts' }, alerts.slice(0, 12).map(a => h('li', null,
+          h('span', { class: 'ico', text: '!', 'aria-hidden': 'true' }),
+          h('div', null, h('div', { class: 'kind', text: a.kind }), h('div', { class: 'title', text: a.title })),
+          h('div', { class: 'detail', text: a.detail }))))
+      : h('p', { class: 'hint', text: 'לא נמצאו הוצאות חריגות החודש.' })));
+}
+
+function searchCard(M) {
+  const input = h('input', { class: 'search', type: 'search', placeholder: 'חיפוש תנועה בכל החודשים', 'aria-label': 'חיפוש תנועה' });
+  const results = h('div', null, txnRows(M.A.rows.filter(t => t.kind !== 'card-bill')));
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    const rows = q ? ALL.filter(t => t.desc.toLowerCase().includes(q) || (t.memo || '').toLowerCase().includes(q)).slice(0, 200)
+      : M.A.rows;
+    results.replaceChildren(txnRows(rows, { emptyText: 'לא נמצאו תנועות' }));
+  });
+  return h('section', { class: 'card' }, expandable(`כל התנועות של ${monthName(M.m, false)}`, null, h('div', null, input, results)));
+}
+
+// ---------- page ----------
+// ---------- edit dialog: move a transaction (or every transaction of a merchant) ----------
+const FLOW_NAME = { fixed: 'קבועה', variable: 'משתנה' };
+let editing = null;
+function openEdit(t) {
+  editing = t;
+  const dlg = $('#edit-dialog');
+  $('#edit-title').textContent = t.desc;
+  $('#edit-sub').textContent = `${shortDate(t.d)} · ${amtText(t.amt)} · ${t.src}`;
+  const cats = new Set(D.transactions.filter(x => x.kind === 'spend').map(x => x.cat));
+  for (const g of D.tracked || []) g.categories.forEach(c => cats.add(c));
+  for (const c of D.extraCategories || []) cats.add(c);
+  if (t.flow === 'fixed' && t.kind === 'spend') for (const g of D.fixedGroups || []) cats.add(g.name); // move into a fixed group
+  $('#edit-cats').replaceChildren(...[...cats].sort((a, b) => a.localeCompare(b, 'he')).map(c => h('option', { value: c })));
+  const excluded = t.kind === 'ignored';
+  $('#edit-cat').value = excluded ? '' : t.cat;
+  $('#edit-cat').disabled = excluded;
+  // fixed <-> variable: "הוצאה קבועה / הוצאה משתנה" (or income), kept with the category in one save
+  const noun = t.kind === 'income' ? 'הכנסה' : 'הוצאה';
+  const flowSel = $('#edit-flow');
+  flowSel.options[1].textContent = `${noun} קבועה`;
+  flowSel.options[2].textContent = `${noun} משתנה`;
+  flowSel.options[0].textContent = t.flow ? `אוטומטי (כרגע: ${noun} ${FLOW_NAME[t.flow]})` : 'אוטומטי';
+  flowSel.value = '';
+  $('#edit-exclude').checked = excluded;
+  $('#edit-oneoff').checked = !!t.oneOff;
+  $('#edit-merchant-label').textContent = `כל התנועות של "${t.desc}" (גם בעתיד)`;
+  dlg.querySelector('input[name="scope"][value="' + (t.ov === 'merchant' ? 'merchant' : 'txn') + '"]').checked = true;
+  $('#edit-reset').hidden = !t.ov;
+  $('#edit-err').textContent = '';
+  dlg.showModal();
+  (excluded ? $('#edit-exclude') : $('#edit-cat')).focus();
+}
+$('#edit-exclude').addEventListener('change', e => { $('#edit-cat').disabled = e.target.checked; });
+$('#edit-cancel').addEventListener('click', () => $('#edit-dialog').close());
+
+async function saveEdit(reset) {
+  const t = editing;
+  const scope = $('#edit-dialog').querySelector('input[name="scope"]:checked').value;
+  const exclude = $('#edit-exclude').checked;
+  const cat = $('#edit-cat').value.trim();
+  if (!reset && !exclude && !cat) { $('#edit-err').textContent = 'צריך לבחור קטגוריה'; return; }
+  const body = reset ? { scope: t.ov || scope, id: t.id, mk: t.mk, reset: true }
+    : { scope, id: t.id, mk: t.mk, exclude, cat: exclude ? null : cat, flow: $('#edit-flow').value || null, oneOff: $('#edit-oneoff').checked };
+  $('#edit-err').textContent = 'שומר…';
+  $('#edit-dialog').querySelectorAll('button').forEach(b => { b.disabled = true; });
+  try {
+    const res = await fetch('/api/override', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Sync-Token': window.SYNC_TOKEN }, body: JSON.stringify(body) });
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok || !out.ok) throw new Error(out.error === 'busy' ? 'סנכרון רץ כרגע, נסו שוב בעוד רגע' : (res.status === 404 ? OLD_SERVER : (out.error || 'השמירה נכשלה')));
+    location.reload(); // the server rebuilt data.js with the change
+  } catch (e) {
+    $('#edit-err').textContent = e.message;
+    $('#edit-dialog').querySelectorAll('button').forEach(b => { b.disabled = false; });
+  }
+}
+$('#edit-form').addEventListener('submit', e => { e.preventDefault(); saveEdit(false); });
+$('#edit-reset').addEventListener('click', () => saveEdit(true));
+
+// ---------- budget dialog: set "צפוי לצאת" for a category (this month and on) ----------
+let budgeting = null;
+function openBudget(p) {
+  budgeting = p;
+  $('#budget-title').textContent = `צפוי לצאת: ${p.name}`;
+  $('#budget-sub').replaceChildren(...[
+    p.avg != null ? ['ממוצע 3 החודשים הקודמים: ', amt(p.avg)] : 'אין עדיין ממוצע',
+    p.budget != null ? [' · כרגע: ', amt(p.budget)] : null,
+  ].flat().filter(Boolean));
+  $('#budget-amount').value = String(Math.round(p.budget ?? p.avg ?? 0));
+  $('#budget-reset').hidden = p.budget == null;
+  $('#budget-err').textContent = '';
+  $('#budget-dialog').showModal();
+  $('#budget-amount').select();
+}
+$('#budget-cancel').addEventListener('click', () => $('#budget-dialog').close());
+async function saveBudget(reset) {
+  const raw = $('#budget-amount').value.replace(/[,₪\s]/g, '');
+  const amount = Number(raw);
+  if (!reset && (!/^\d+(\.\d+)?$/.test(raw) || amount > 1e7)) { $('#budget-err').textContent = 'צריך להזין סכום במספרים'; return; }
+  $('#budget-err').textContent = 'שומר…';
+  $('#budget-dialog').querySelectorAll('button').forEach(b => { b.disabled = true; });
+  try {
+    const res = await fetch('/api/budget', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Sync-Token': window.SYNC_TOKEN },
+      body: JSON.stringify(reset ? { key: budgeting.key, reset: true } : { key: budgeting.key, amount }) });
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok || !out.ok) throw new Error(out.error === 'busy' ? 'סנכרון רץ כרגע, נסו שוב בעוד רגע' : (res.status === 404 ? OLD_SERVER : (out.error || 'השמירה נכשלה')));
+    location.reload();
+  } catch (e) {
+    $('#budget-err').textContent = e.message;
+    $('#budget-dialog').querySelectorAll('button').forEach(b => { b.disabled = false; });
+  }
+}
+$('#budget-form').addEventListener('submit', e => { e.preventDefault(); saveBudget(false); });
+$('#budget-reset').addEventListener('click', () => saveBudget(true));
+
+// the selected month survives reloads (after a sync or an edit)
+const hashMonth = (location.hash.match(/m=(\d{4}-\d{2})/) || [])[1];
+const state = { month: hashMonth && MONTHS.includes(hashMonth) ? hashMonth : FM };
+let compare;
+function render() {
+  history.replaceState(null, '', '#m=' + state.month);
+  const M = model(state.month);
+  const i = MONTHS.indexOf(state.month);
+  $('#prev').disabled = i <= 0;
+  $('#next').disabled = i >= MONTHS.length - 1;
+  $('#month-label').replaceChildren(...[monthName(state.month), M.isCurrent ? h('span', { class: 'sub', text: '(החודש)' }) : null].filter(Boolean));
+  compare = compareCard(M);
+  $('#col-a').replaceChildren(...[balanceCard(M), heroCard(M), variableLeftCard(M), compare, alertsCard(M), outsideCard(M), searchCard(M), syncCard()].filter(Boolean));
+  // top bar: a source that failed or hasn't synced in a while
+  const bad = (D.sources || []).filter(src => sourceStatus(src).level !== 'ok');
+  $('#sync-warn').hidden = !bad.length;
+  $('#sync-warn').textContent = bad.length ? '⚠ ' + bad.map(src => src.name).join(', ') + ': בעיה בסנכרון' : '';
+  $('#col-b').replaceChildren(...[incomeCard(M), fixedCard(M), debtCard(M), variableCard(M),
+    h('div', { class: 'section-title', text: 'קטגוריות למעקב' }), ...trackedCards(M)].filter(Boolean));
+}
+$('#prev').addEventListener('click', () => { const i = MONTHS.indexOf(state.month); if (i > 0) { state.month = MONTHS[i - 1]; render(); } });
+$('#next').addEventListener('click', () => { const i = MONTHS.indexOf(state.month); if (i < MONTHS.length - 1) { state.month = MONTHS[i + 1]; render(); } });
+render();
+let rt;
+addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => compare && compare._redraw(), 120); });
+})();
+</script>
+</body>
+</html>

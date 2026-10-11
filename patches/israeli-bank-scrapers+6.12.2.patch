@@ -1,0 +1,31 @@
+diff --git a/node_modules/israeli-bank-scrapers/lib/scrapers/base-beinleumi-group.js b/node_modules/israeli-bank-scrapers/lib/scrapers/base-beinleumi-group.js
+index 4e821fa..0d194ac 100644
+--- a/node_modules/israeli-bank-scrapers/lib/scrapers/base-beinleumi-group.js
++++ b/node_modules/israeli-bank-scrapers/lib/scrapers/base-beinleumi-group.js
+@@ -9,6 +9,7 @@ exports.default = void 0;
+ exports.getPossibleLoginResults = getPossibleLoginResults;
+ exports.selectAccountFromDropdown = selectAccountFromDropdown;
+ exports.waitForPostLogin = waitForPostLogin;
++exports.parseBalance = parseBalance;
+ var _moment = _interopRequireDefault(require("moment"));
+ var _constants = require("../constants");
+ var _elementsInteractions = require("../helpers/elements-interactions");
+@@ -226,7 +227,17 @@ async function getCurrentBalance(page) {
+   const balanceStr = await page.$eval(CURRENT_BALANCE, el => {
+     return el.innerText;
+   });
+-  return getAmountData(balanceStr);
++  return parseBalance(balanceStr);
++}
++
++// The balance element can carry bidi marks, a label or a trailing minus ("1,234.56-"), which
++// parseFloat turns into NaN or a positive number. Take the first number and its sign from either side.
++function parseBalance(balanceStr) {
++  const cleaned = balanceStr.replace(/[‎‏‪-‮⁦-⁩]/g, '');
++  const match = cleaned.match(/([-−]?)\s*₪?\s*(\d[\d,]*(?:\.\d+)?)\s*₪?\s*([-−]?)/);
++  if (!match) return NaN;
++  const value = parseFloat(match[2].replaceAll(',', ''));
++  return match[1] || match[3] ? -value : value;
+ }
+ async function waitForPostLogin(page) {
+   return Promise.race([(0, _elementsInteractions.waitUntilElementFound)(page, '#card-header', false),

@@ -1,0 +1,22 @@
+{
+  "name": "spending-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local, private cash-flow dashboard (Hebrew, RTL) for Israeli bank and credit-card accounts, built on israeli-bank-scrapers",
+  "engines": {
+    "node": ">= 22.22.2"
+  },
+  "scripts": {
+    "postinstall": "patch-package",
+    "dashboard": "node server.mjs",
+    "scrape": "node --env-file=.env scrape.mjs",
+    "build": "node build.mjs",
+    "update": "npm run scrape && npm run build",
+    "demo": "node demo.mjs && node build.mjs --demo"
+  },
+  "dependencies": {
+    "israeli-bank-scrapers": "6.12.2",
+    "patch-package": "^8.0.0"
+  }
+}

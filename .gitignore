@@ -1,0 +1,10 @@
+# credentials
+.env
+
+# your financial data (scraped transactions, manual changes, backups, demo data) — never commit
+data/
+dashboard/data.js
+
+node_modules/
+.claude/
+*.log

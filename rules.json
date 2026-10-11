@@ -1,0 +1,93 @@
+{
+  "_help": [
+    "Patterns are case-insensitive regular expressions matched against the transaction description and memo.",
+    "Any rule can be limited with \"sources\": [scraper ids, e.g. \"leumi\", \"visaCal\"] and/or \"kind\": \"bank\" or \"card\".",
+    "cardBills: how each card's monthly bill appears on the bank account. If that card is scraped, the bank row is matched to the card's own charge day and dropped (the card's itemized purchases count instead); any part of the bill the card data does not itemize stays as '<label> – ללא פירוט'. If the card is not scraped, the bank row counts as spending.",
+    "cardInternal: card rows that are not purchases (e.g. a revolving-credit balance that repeats earlier purchases). They are left out entirely; the bank payment for them is still matched to the card.",
+    "ignore: rows outside the cash flow ('לא בתזרים'), e.g. savings, investments, loans received. Optional \"direction\": \"in\" (money in) or \"out\" (money out); without it the rule matches both.",
+    "fixed / variable: force a description into fixed or variable. Everything else is detected automatically: a charge that appears about once a month, almost every month, with a similar amount, is fixed. Installments are always fixed.",
+    "categories: first match wins and overrides the card company's category. Use it for bank rows (which have no category) and to fix wrong ones.",
+    "tracked: the category cards shown on the dashboard. Each groups one or more categories.",
+    "aliases: rename or merge categories that come from the card companies, e.g. {\"מזון ומשקאות\": \"מזון וצריכה\"}.",
+    "extraCategories: categories offered in the שינוי dialog even before any transaction uses them.",
+    "fixedGroups: how the \"הוצאות קבועות\" breakdown is grouped, in display order. A payee goes to the group whose name equals its category (set with שינוי), else the first group whose pattern matches its description, else the first group listing its category, else the last group.",
+    "After `npm run build`, the console lists the largest uncategorized descriptions so you know which rules to add."
+  ],
+  "cardBills": [
+    { "card": "visaCal", "label": "כאל", "pattern": "כאל|כ\\.א\\.ל|כרטיסי אשראי לי" },
+    { "card": "isracard", "label": "ישראכרט", "pattern": "ישראכרט" },
+    { "card": "amex", "label": "אמריקן אקספרס", "pattern": "אמריקן אקספרס|פרימיום אקספרס|אמקס" },
+    { "card": "max", "label": "מקס", "pattern": "מקס איט|לאומי קארד" }
+  ],
+  "cardInternal": [
+    {
+      "pattern": "יתרת אשראי מתגלגל|העברת יתרה",
+      "note": "a card moving unpaid purchases into revolving credit lists them again as one row; the purchases already count"
+    }
+  ],
+  "ignore": [
+    {
+      "pattern": "חיסכון|פיקדון|פקדון|השקע",
+      "kind": "bank",
+      "note": "moving money to your own savings"
+    },
+    {
+      "pattern": "^(?!.*(עמל|דמי ניהול|דמי משמרת)).*(נע-|ני\"ע|ני''ע|נ\"ע|ניירות ערך|קרן כספית|כספית|פדיון|רווחי? הון|דיבידנד|אג\"ח|מק\"מ|קנ' ני|מכ' ני)",
+      "kind": "bank",
+      "note": "securities and money-market fund (קרן כספית) buys, sells, redemptions, dividends and capital-gains tax: moving your own money, not income or spending. Securities fees stay counted."
+    },
+    {
+      "pattern": "קופ\"ג|קופת גמל|השתלמות",
+      "kind": "bank",
+      "direction": "out",
+      "note": "pension / keren hishtalmut deposits"
+    },
+    {
+      "pattern": "הלוואה - תשלום קרן|העמדת הלוואה",
+      "kind": "bank",
+      "direction": "in",
+      "note": "a loan received is not income"
+    }
+  ],
+  "fixed": [
+    "משכנתא|הלוואה|הלואה",
+    "ארנונה|עירית|עיריית|מועצה",
+    "חברת החשמל|תאגיד מים|מי אביבים",
+    "ועד בית",
+    "משכורת|קצבת ילדים|ביטוח לאומי"
+  ],
+  "variable": [],
+  "categories": [
+    { "pattern": "עמלה|דמי ניהול|עמלת|ריבית על מסגרת", "category": "עמלות בנק" },
+    { "pattern": "משכנתא|הלוואה|הלואה", "category": "משכנתא והלוואות" },
+    { "pattern": "כספומט|כספונט|משיכת מזומן", "category": "משיכת מזומן" },
+    { "pattern": "ארנונה|עירית|עיריית|מועצה", "category": "עירייה וממשלה" },
+    { "pattern": "חברת החשמל|סלקום אנרג|אלקטרה פאוור|electric", "category": "חשמל" },
+    { "pattern": "תאגיד מים|מי אביבים|מי שבע|מי רמת גן|הגיחון|מי כרמל", "category": "מים" },
+    { "pattern": "ביטוח|הראל|מגדל|כלל ביטוח|הפניקס|מנורה|איילון|ליברה", "category": "ביטוח ופיננסים" },
+    { "pattern": "גן ילדים|צהרון|חוגים|מתנ\"ס", "category": "חינוך" },
+    { "pattern": "העברה מהחשבון", "category": "העברות יוצאות" },
+    { "pattern": "ועד בית", "category": "ריהוט ובית" },
+    { "pattern": "netflix|youtube|spotify|disney|apple\\.com", "category": "תקשורת ומחשבים" },
+    { "pattern": "amazon|amzn|aliexpress|temu|shein", "category": "קניות אונליין" }
+  ],
+  "tracked": [
+    { "name": "סופרמרקט", "categories": ["מזון ומשקאות", "מזון וצריכה"] },
+    { "name": "אוכל בחוץ", "categories": ["מסעדות", "מזון מהיר", "מסעדות, קפה וברים"] },
+    { "name": "פנאי ובילויים", "categories": ["פנאי בילוי", "פנאי, בידור וספורט", "תיירות", "מלונאות ואירוח"] },
+    { "name": "בריאות וטיפוח", "categories": ["רפואה ובריאות", "רפואה ובתי מרקחת", "טיפוח ויופי"] },
+    { "name": "קניות", "categories": ["אופנה", "ריהוט ובית", "קניות אונליין", "מוצרי חשמל"] },
+    { "name": "רכב ותחבורה", "categories": ["רכב ותחבורה", "תחבורה ורכבים"] }
+  ],
+  "fixedGroups": [
+    { "name": "דיור", "pattern": "משכנתא|ועד בית|ארנונה|עיריית|שכר דירה|שכירות", "categories": ["עירייה וממשלה"] },
+    { "name": "חינוך", "pattern": "מתנ\"ס|חוגים|צהרון|גן ילדים", "categories": ["חינוך", "ילדים"] },
+    { "name": "הלוואות", "pattern": "הלוואה|הלואה", "categories": ["משכנתא והלוואות"] },
+    { "name": "ביטוחים", "pattern": "ביטוח|לבטוח|קרן מכבי|כללית מושלם|מאוחדת|לאומית", "categories": ["ביטוח ופיננסים"] },
+    { "name": "הוצאות לבית", "categories": ["ריהוט ובית", "תקשורת ומחשבים", "מוצרי חשמל", "שירותי תקשורת"] },
+    { "name": "חשמל ומים", "pattern": "פז גז|סופרגז|אמישראגז|סלקום אנרג|חברת החשמל|תאגיד מים|מי ", "categories": ["חשמל", "מים", "אנרגיה"] },
+    { "name": "שונות", "categories": [] }
+  ],
+  "extraCategories": ["חיסכון"],
+  "aliases": {}
+}
